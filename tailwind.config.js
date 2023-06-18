@@ -251,6 +251,11 @@ module.exports = {
         redditNav: "#1A1A1B",
         redditSearch: "#272729",
         redditBG: "#141415",
+        discordBG: "#313338",
+        discordDarkBG: "#2b2d31",
+        discordBlue: "#5865f2",
+        discordGreen: "#23a559",
+        discordDark: "#1e1f22",
       },
       spacing: {
         7: "1.75rem",
