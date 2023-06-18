@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={mono.className}>{children}</body>
+      <body className={`${mono.className} bg-slate-900 text-white`}>{children}</body>
     </html>
   );
 }

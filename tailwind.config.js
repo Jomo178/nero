@@ -6,7 +6,7 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   mode: "jit",
-  important: true,
+  // important: true,
   darkMode: "class",
   theme: {
     extend: {
