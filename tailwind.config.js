@@ -7,6 +7,7 @@ module.exports = {
   ],
   mode: "jit",
   important: true,
+  darkMode: "class",
   theme: {
     extend: {
       backgroundImage: {
@@ -290,20 +291,21 @@ module.exports = {
         270: "270deg",
         360: "360deg",
       },
-      fontFamily: {
-        header: ["goudy-bookletter-1911", "serif"],
-        heady: ["p22-marcel-script-pro", "sans-serif"],
-        poppins: ["poppins", "sans-serif"],
-        somaRoman: ["neue-haas-grotesk-text", "sans-serif"],
-        somaDisplay: ["neue-haas-grotesk-display", "sans-serif"],
-        sans: ["Inter", ...defaultTheme.fontFamily.sans],
-      },
+      // fontFamily: {
+      //   header: ["goudy-bookletter-1911", "serif"],
+      //   heady: ["p22-marcel-script-pro", "sans-serif"],
+      //   poppins: ["poppins", "sans-serif"],
+      //   somaRoman: ["neue-haas-grotesk-text", "sans-serif"],
+      //   somaDisplay: ["neue-haas-grotesk-display", "sans-serif"],
+      //   sans: ["Inter", ...defaultTheme.fontFamily.sans],
+      // },
     },
   },
   plugins: [
-    require("tailwindcss-line-clamp"),
+    // require("@tailwindcss-line-clamp"),
     require("@tailwindcss/typography"),
     require("@tailwindcss/forms"),
     require("@tailwindcss/aspect-ratio"),
+    require("@tailwindcss/container-queries"),
   ],
 };
