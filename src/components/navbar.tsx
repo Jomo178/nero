@@ -1,12 +1,30 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IconType } from "react-icons";
 import { SlArrowUp } from "react-icons/sl";
 import { CgProfile, CgLogOut } from "react-icons/cg";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const motionDivRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        motionDivRef.current &&
+        !motionDivRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -20,6 +38,7 @@ function Navbar() {
           animate={isOpen ? "open" : "closed"}
           className="flex justify-between items-center gap-2 relative hover:cursor-pointer"
           onClick={() => setIsOpen((pv) => !pv)}
+          ref={motionDivRef}
         >
           <h2>jomo._.7</h2>
           <ImageAvatar src={bot.imageUrl}></ImageAvatar>
@@ -70,7 +89,7 @@ function ActionList({
     <>
       <motion.li
         variants={itemVariants}
-        className="flex gap-2 items-center p-2 rounded my-1  hover:bg-discordBG"
+        className="flex gap-2 items-center p-2 rounded my-1 mx-1  hover:bg-discordBG"
         style={{ color }}
       >
         <motion.span variants={actionIconVariants}>
