@@ -36,7 +36,7 @@ function Navbar() {
 
         <motion.div
           animate={isOpen ? "open" : "closed"}
-          className="flex justify-between items-center gap-2 relative hover:cursor-pointer"
+          className="flex justify-between items-center gap-2 relative hover:cursor-pointer z-10"
           onClick={() => setIsOpen((pv) => !pv)}
           ref={motionDivRef}
         >
