@@ -28,41 +28,59 @@
 // export default SectionTwo;
 
 import { motion, useAnimate, useInView, usePresence } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Root, createRoot } from "react-dom/client";
 
 function SectionTwo() {
-  const cardsLength = 10;
+  const cardsLength = 4;
   const cards = [];
-  const refList = useRef<(HTMLDivElement | null)[]>([]);
 
-  const inView: any = [];
+  function animationCompleted(e: IntersectionObserverEntry | null) {
+    if (!e) return;
+    e.target.remove();
+    const sec = document.getElementById("test");
+    if (!sec) return;
+
+    const motionDiv = (
+      <motion.div
+        variants={divVariants}
+        initial="initial"
+        animate="animate"
+        className="bg-white rounded-lg shadow-md p-4 min-w-[11rem] h-72"
+        onAnimationComplete={() => console.log(1 + " done! Complete")}
+        onAnimationEnd={() => console.log(1 + " done!")}
+        onViewportLeave={(e) => animationCompleted(e)}
+        key={Math.random().toString(36).substring(2, 10)}
+      ></motion.div>
+    );
+
+    let root = createRoot(sec);
+    root.render(motionDiv);
+
+    setTimeout(() => root.unmount(), 1000);
+    return;
+  }
 
   for (let i = 0; i < cardsLength; i++) {
     cards.push(
       <motion.div
-        ref={(ref) => (refList.current[i] = ref)}
         variants={divVariants}
         initial="initial"
         animate="animate"
-        className="bg-white rounded-lg shadow-md p-4 w-44 h-72"
+        className="bg-white rounded-lg shadow-md p-4 min-w-[11rem] h-72"
+        onAnimationComplete={() => console.log(i + " done! Complete")}
+        onAnimationEnd={() => console.log(i + " done!")}
+        onViewportLeave={(e) => animationCompleted(e)}
         key={i}
       ></motion.div>
     );
   }
 
-  useEffect(() => {
-    for (let i = 0; i < cardsLength; i++) {
-      const refValue: any = refList.current[i];
-      const view = useInView(refValue);
-      if (view) return;
-      if (!refValue) return;
-      refValue.remove();
-    }
-  }, []);
-
   return (
     <>
-      <section className="flex gap-2">{cards}</section>
+      <section className="flex gap-2" id="test">
+        {cards}
+      </section>
     </>
   );
 }
@@ -74,8 +92,8 @@ const divVariants = {
   animate: {
     x: "-100vw",
     transition: {
-      duration: 100,
-      repeat: Infinity,
+      duration: 14,
+      // repeat: Infinity,
       ease: "linear",
     },
   },
