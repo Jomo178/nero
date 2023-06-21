@@ -68,13 +68,4 @@ const infoAnimation = {
   },
 };
 
-function Cards({ image, animation }: { image?: string; animation: object }) {
-  return (
-    <motion.div
-      animate={animation}
-      className="bg-white rounded-lg shadow-md p-4 w-44 h-72 absolute top-9"
-    ></motion.div>
-  );
-}
-
 export default SectionOne;

@@ -3,11 +3,11 @@ import { motion } from "framer-motion";
 import { ReactNode } from "react";
 
 function SectionTwo() {
-  const ROWS = 12;
+  const ROWS = 10;
 
   return (
     <>
-      <section>
+      <section className="h-full w-full">
         <div className="overflow-hidden">
           <div className="inset-0 flex flex-col gap-2 opacity-30">
             <InfiniteLoopSlider duration={30} reverse={false}>
