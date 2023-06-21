@@ -1,82 +1,68 @@
 "use client";
-
 import { motion } from "framer-motion";
-
-const ROWS = 6;
-
-const InfiniteLoopSlider = ({
-  children,
-  duration,
-  reverse = false,
-}: {
-  children: any;
-  duration: number;
-  reverse: any;
-}) => {
-  return (
-    <div>
-      <motion.div
-        initial={{ x: "0%" }}
-        animate={{
-          x: "-50%",
-        }}
-        transition={{
-          duration,
-          repeat: Infinity,
-          ease: "linear",
-          repeatType: "reverse",
-          yoyo: false,
-        }}
-        className="flex w-fit"
-      >
-        {children}
-        {children}
-      </motion.div>
-    </div>
-  );
-};
+import { ReactNode } from "react";
 
 function SectionTwo() {
+  const ROWS = 12;
+
   return (
     <>
       <section>
-        <div>
-          {/* <InfiniteLoopSlider key={2} duration={8} reverse={false}>
-            {[...new Array(ROWS)].map((_, i) => (
-              <CreateCards key={i} text={i.toString()} />
-            ))}
-          </InfiniteLoopSlider> */}
-          <InfiniteLoopSlider key={2} duration={8} reverse={true}>
-            {[...new Array(ROWS)].map((_, i) => (
-              <CreateCards key={i} text={i.toString()} />
-            ))}
-          </InfiniteLoopSlider>
+        <div className="relative">
+          <div className="absolute inset-0 flex flex-col gap-2 opacity-30">
+            <InfiniteLoopSlider duration={30} reverse={false}>
+              {[...new Array(ROWS)].map((_, i) => (
+                <CreateCards key={i} />
+              ))}
+            </InfiniteLoopSlider>
+            <InfiniteLoopSlider duration={30} reverse={true}>
+              {[...new Array(ROWS)].map((_, i) => (
+                <CreateCards key={i} />
+              ))}
+            </InfiniteLoopSlider>
+          </div>
+          <div className="absolute h-64 inset-48 flex items-center justify-center z-10">
+            <div className="w-48 h-64 bg-slate-300"></div>
+            <p>dsds</p>
+          </div>
         </div>
       </section>
     </>
   );
 }
 
-function CreateCards({ text }: { text: string }) {
+function CreateCards() {
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 min-w-[11rem] h-72">
-      <p className="text-black">{text}</p>
-    </div>
+    <div className="bg-white rounded-lg shadow-md p-4 min-w-[11rem] h-72"></div>
   );
 }
 
-const loop = {
-  initial: { x: "0" },
-
-  animate: {
-    x: "50%",
-    transition: {
-      duration: 10,
-      repeat: Infinity,
-      direction: "reverse",
-      ease: "linear",
-    },
-  },
-};
+function InfiniteLoopSlider({
+  children,
+  duration,
+  reverse,
+}: {
+  children: ReactNode;
+  duration: number;
+  reverse: boolean;
+}) {
+  return (
+    <motion.div
+      initial={{ x: reverse ? "-50%" : "0%" }}
+      animate={{
+        x: reverse ? "0%" : "-50%",
+      }}
+      transition={{
+        duration,
+        repeat: Infinity,
+        ease: "linear",
+      }}
+      className="flex w-fit gap-1"
+    >
+      {children}
+      {children}
+    </motion.div>
+  );
+}
 
 export default SectionTwo;
