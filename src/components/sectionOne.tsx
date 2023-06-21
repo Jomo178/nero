@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 function SectionOne() {
   return (
     <>
-      <section className="flex gap-2 justify-between items-center h-full w-full">
+      <section className="flex gap-2 justify-between items-center min-h-full w-full">
         <div>
           <motion.div
             variants={cardsAnimation}
