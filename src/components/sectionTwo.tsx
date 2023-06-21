@@ -1,99 +1,79 @@
 "use client";
-// import React from "react";
-// import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
-// const SectionTwo = () => {
-//   const x = useMotionValue(13);
-//   const y = useSpring(10);
+import { motion } from "framer-motion";
 
-//   const z = useTransform(
-//     [x, y],
-//     //@ts-ignore
-//     ([latestX, latestY]): number => latestX * latestY
-//   );
-//   return (
-//     <section className="h-full w-full mx-4">
-//       <div>
-//         <div className="flex gap-2 w-full">
-//           <motion.div
-//             style={{ x, y, z }}
-//             className="bg-white rounded-lg shadow-md p-4 w-44 h-72"
-//           ></motion.div>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
+const ROWS = 6;
 
-// export default SectionTwo;
-
-import { motion, useAnimate, useInView, usePresence } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { Root, createRoot } from "react-dom/client";
+const InfiniteLoopSlider = ({
+  children,
+  duration,
+  reverse = false,
+}: {
+  children: any;
+  duration: number;
+  reverse: any;
+}) => {
+  return (
+    <div>
+      <motion.div
+        initial={{ x: "0%" }}
+        animate={{
+          x: "-50%",
+        }}
+        transition={{
+          duration,
+          repeat: Infinity,
+          ease: "linear",
+          repeatType: "reverse",
+          yoyo: false,
+        }}
+        className="flex w-fit"
+      >
+        {children}
+        {children}
+      </motion.div>
+    </div>
+  );
+};
 
 function SectionTwo() {
-  const cardsLength = 4;
-  const cards = [];
-
-  function animationCompleted(e: IntersectionObserverEntry | null) {
-    if (!e) return;
-    e.target.remove();
-    const sec = document.getElementById("test");
-    if (!sec) return;
-
-    const motionDiv = (
-      <motion.div
-        variants={divVariants}
-        initial="initial"
-        animate="animate"
-        className="bg-white rounded-lg shadow-md p-4 min-w-[11rem] h-72"
-        onAnimationComplete={() => console.log(1 + " done! Complete")}
-        onAnimationEnd={() => console.log(1 + " done!")}
-        onViewportLeave={(e) => animationCompleted(e)}
-        key={Math.random().toString(36).substring(2, 10)}
-      ></motion.div>
-    );
-
-    let root = createRoot(sec);
-    root.render(motionDiv);
-
-    setTimeout(() => root.unmount(), 1000);
-    return;
-  }
-
-  for (let i = 0; i < cardsLength; i++) {
-    cards.push(
-      <motion.div
-        variants={divVariants}
-        initial="initial"
-        animate="animate"
-        className="bg-white rounded-lg shadow-md p-4 min-w-[11rem] h-72"
-        onAnimationComplete={() => console.log(i + " done! Complete")}
-        onAnimationEnd={() => console.log(i + " done!")}
-        onViewportLeave={(e) => animationCompleted(e)}
-        key={i}
-      ></motion.div>
-    );
-  }
-
   return (
     <>
-      <section className="flex gap-2" id="test">
-        {cards}
+      <section>
+        <div>
+          {/* <InfiniteLoopSlider key={2} duration={8} reverse={false}>
+            {[...new Array(ROWS)].map((_, i) => (
+              <CreateCards key={i} text={i.toString()} />
+            ))}
+          </InfiniteLoopSlider> */}
+          <InfiniteLoopSlider key={2} duration={8} reverse={true}>
+            {[...new Array(ROWS)].map((_, i) => (
+              <CreateCards key={i} text={i.toString()} />
+            ))}
+          </InfiniteLoopSlider>
+        </div>
       </section>
     </>
   );
 }
 
-const divVariants = {
-  initial: {
-    x: "100%",
-  },
+function CreateCards({ text }: { text: string }) {
+  return (
+    <div className="bg-white rounded-lg shadow-md p-4 min-w-[11rem] h-72">
+      <p className="text-black">{text}</p>
+    </div>
+  );
+}
+
+const loop = {
+  initial: { x: "0" },
+
   animate: {
-    x: "-100vw",
+    x: "50%",
     transition: {
-      duration: 14,
-      // repeat: Infinity,
+      duration: 10,
+      repeat: Infinity,
+      direction: "reverse",
       ease: "linear",
     },
   },
