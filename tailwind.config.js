@@ -296,6 +296,9 @@ module.exports = {
         270: "270deg",
         360: "360deg",
       },
+      container: {
+        center: true,
+      },
       // fontFamily: {
       //   header: ["goudy-bookletter-1911", "serif"],
       //   heady: ["p22-marcel-script-pro", "sans-serif"],

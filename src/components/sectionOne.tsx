@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 function SectionOne() {
   return (
     <>
-      <section className="flex gap-2 justify-between mx-4 items-center h-full w-full relative overflow-x-hidden">
-        <div className="min-w-[50px] h-full">
+      <section className="flex gap-2 justify-between items-center h-full w-full">
+        <div>
           <motion.div
             variants={cardsAnimation}
             animate="cardOneBegin"
@@ -29,7 +29,7 @@ function SectionOne() {
             </button>
           </div>
         </motion.div>
-        <div className="min-w-[50px] h-full">
+        <div>
           <motion.div
             variants={cardsAnimation}
             animate="cardTwoBegin"
@@ -43,13 +43,13 @@ function SectionOne() {
 
 const cardsAnimation = {
   cardOneBegin: {
-    y: 400,
+    y: 500,
     x: 130,
     rotate: -18,
     transition: { duration: 2.5 },
   },
   cardTwoBegin: {
-    y: 400,
+    y: 500,
     x: -130,
     rotate: 18,
     transition: { duration: 2.5 },

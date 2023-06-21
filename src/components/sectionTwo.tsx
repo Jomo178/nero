@@ -8,8 +8,8 @@ function SectionTwo() {
   return (
     <>
       <section>
-        <div className="relative">
-          <div className="absolute inset-0 flex flex-col gap-2 opacity-30">
+        <div className="overflow-hidden">
+          <div className="inset-0 flex flex-col gap-2 opacity-30">
             <InfiniteLoopSlider duration={30} reverse={false}>
               {[...new Array(ROWS)].map((_, i) => (
                 <CreateCards key={i} />
@@ -21,7 +21,7 @@ function SectionTwo() {
               ))}
             </InfiniteLoopSlider>
           </div>
-          <div className="absolute h-64 inset-48 flex items-center justify-center z-10">
+          <div className="h-64 inset-48 flex items-center justify-center z-10">
             <div className="w-48 h-64 bg-slate-300"></div>
             <p>dsds</p>
           </div>
