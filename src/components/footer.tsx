@@ -1,9 +1,29 @@
 import ImageAvatar, { bot } from "./small/avatar";
 import { MdEmail } from "react-icons/md";
 import { FaDiscord, FaInstagram, FaTwitter } from "react-icons/fa";
+import { HiUserGroup } from "react-icons/hi";
+import { BsLayoutTextWindow } from "react-icons/bs";
+import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import Link from "next/link";
+import Select from "react-tailwindcss-select";
+import { useState } from "react";
+import { SelectValue } from "react-tailwindcss-select/dist/components/type";
+import { ReactSVG } from "react-svg";
+
+const options: any = [
+  { value: "germany", label: "Germany" },
+  { value: "Butterfly", label: "🦋 Butterfly" },
+  { value: "Honeybee", label: "🐝 Honeybee" },
+];
 
 function Footer() {
+  const [animal, setAnimal] = useState<SelectValue | null>(null);
+
+  const handleChange = (value: SelectValue) => {
+    console.log("value:", value);
+    setAnimal(value);
+  };
+
   return (
     <>
       <footer className="bg-waveColor pt-16 pb-20">
@@ -13,16 +33,17 @@ function Footer() {
               <ImageAvatar src={bot.imageUrl}></ImageAvatar>
               <h6 className="text-2xl font-semibold">{bot.name}</h6>
             </Link>
-            <p className="max-w-sm">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facere,
-              itaque veritatis distinctio sit pariatur eius velit aut assumenda
-              quibusdam dolore tempore necessitatibus ut quasi. Ipsum qui
-              cupiditate recusandae quaerat impedit.
+            <p className="max-w-sm text-sm">
+              Introducing {bot.name}, the lightning-fast Discord card bot that
+              brings the excitement of collecting cards to your server! With an
+              extensive collection of user-friendly cards, you'll embark on a
+              thrilling journey of discovery and strategic gameplay. Unleash
+              your inner collector and join the adventure with {bot.name} today!
             </p>
           </div>
           <div className="md:ml-8">
             <h6 className="mb-7 text-2xl font-semibold">Contact</h6>
-            <ul className="flex flex-col gap-4">
+            <ul className="flex flex-col gap-4 cursor-pointer">
               <li className="flex gap-2 items-center hover:text-gray-500 transition-all">
                 <MdEmail></MdEmail>
                 <a href={`mailto:${bot.mail}`}>{bot.mail}</a>
@@ -37,12 +58,46 @@ function Footer() {
             <h6 className="mb-7 text-2xl font-semibold">Social</h6>
             <ul className="flex flex-row gap-6 cursor-pointer">
               <li className="hover:text-gray-500 transition-all">
-                <FaInstagram size={26}></FaInstagram>
+                <Link href="/">
+                  <FaInstagram size={26}></FaInstagram>
+                </Link>
               </li>
               <li className="hover:text-gray-500 transition-all">
-                <FaTwitter size={26}></FaTwitter>
+                <Link href="/">
+                  <FaTwitter size={26}></FaTwitter>
+                </Link>
               </li>
             </ul>
+          </div>
+          <div className="md:ml-8">
+            <h6 className="mb-7 text-2xl font-semibold">Discover More</h6>
+            <ul className="flex flex-col gap-4 cursor-pointer">
+              <li className="flex gap-2 items-center hover:text-gray-500 transition-all">
+                <HiUserGroup></HiUserGroup>
+                <a href="/">About Us</a>
+              </li>
+              <li className="flex gap-2 items-center hover:text-gray-500 transition-all">
+                <BsLayoutTextWindow></BsLayoutTextWindow>
+                <a href="/">Blogs</a>
+              </li>
+              <li className="flex gap-2 items-center hover:text-gray-500 transition-all">
+                <AiOutlineUsergroupAdd></AiOutlineUsergroupAdd>
+                <a href="/">Join Us</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <Select
+              primaryColor="indigo"
+              value={animal}
+              onChange={handleChange}
+              options={options}
+              formatOptionLabel={(data) => (
+                <li>
+                  <img src={"/" + data.value + ".svg"} alt="" /> {data.label}
+                </li>
+              )}
+            />
           </div>
         </div>
         <div className="ml-14 mt-10">

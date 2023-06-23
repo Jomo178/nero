@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { bot } from "./small/avatar";
 
 function SectionOne() {
   return (
@@ -16,15 +17,18 @@ function SectionOne() {
           variants={infoAnimation}
           initial="hidden"
           animate="show"
-          className="flex flex-col gap-2 text-center z-10"
+          className="flex flex-col gap-9 text-center z-10"
         >
-          <p className="text-4xl">Nero</p>
-          <p className="text-sm">Lorem ipsum dolor sit amet consectetur.</p>
+          <p className="text-4xl">{bot.name}</p>
+          <p className="text-sm max-w-xs mb-1">
+            Experience seamless performance and quick response times, ensuring a
+            smooth and enjoyable card collecting experience.
+          </p>
           <div className="flex gap-6 items-center justify-center">
             <button className="bg-blue-700 p-3 rounded hover:bg-blue-900 transition-all duration-500">
               Invite
             </button>
-            <button className="bg-blue-800 p-3 rounded hover:bg-blue-900 transition-all duration-500">
+            <button className="bg-blue-700 p-3 rounded hover:bg-blue-900 transition-all duration-500">
               Join Server
             </button>
           </div>
