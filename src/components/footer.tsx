@@ -11,17 +11,21 @@ import { SelectValue } from "react-tailwindcss-select/dist/components/type";
 import { ReactSVG } from "react-svg";
 
 const options: any = [
-  { value: "germany", label: "Germany" },
-  { value: "Butterfly", label: "🦋 Butterfly" },
-  { value: "Honeybee", label: "🐝 Honeybee" },
+  { value: "german", label: "Germany" },
+  { value: "english", label: "English" },
 ];
 
 function Footer() {
-  const [animal, setAnimal] = useState<SelectValue | null>(null);
+  const [animal, setAnimal] = useState<any | null>(null);
 
   const handleChange = (value: SelectValue) => {
     console.log("value:", value);
     setAnimal(value);
+  };
+
+  const handleSVGInjection = (svg: any) => {
+    svg.setAttribute("height", "20px");
+    svg.setAttribute("width", "20px");
   };
 
   return (
@@ -86,17 +90,28 @@ function Footer() {
               </li>
             </ul>
           </div>
-          <div>
+          <div className="min-w-[11rem] cursor-pointer">
             <Select
-              primaryColor="indigo"
+              primaryColor="blue"
+              placeholder={animal == null ? "English" : animal}
               value={animal}
               onChange={handleChange}
               options={options}
               formatOptionLabel={(data) => (
-                <li>
-                  <img src={"/" + data.value + ".svg"} alt="" /> {data.label}
+                <li className="list-none h-8 my-2 cursor-pointer items-center flex hover:bg-gray-600 transition-all duration-700 rounded-md">
+                  <span className="flex items-center gap-3 mx-2">
+                    <ReactSVG
+                      beforeInjection={handleSVGInjection}
+                      src={`/${data.value}.svg`}
+                      title={`${data.value}'s flag`}
+                    />
+                    {data.label}
+                  </span>
                 </li>
               )}
+              classNames={{
+                menu: "bg-gray-700 w-44 p-0",
+              }}
             />
           </div>
         </div>
