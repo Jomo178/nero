@@ -9,7 +9,7 @@ function SectionOne() {
           <motion.div
             variants={cardsAnimation}
             animate="cardOneBegin"
-            className="bg-white rounded-lg shadow-md p-4 w-44 h-72 absolute -top-72"
+            className="bg-white rounded-lg shadow-md p-4 w-44 h-72 absolute -top-72 hidden lg:block"
           ></motion.div>
         </div>
         <motion.div
@@ -33,7 +33,7 @@ function SectionOne() {
           <motion.div
             variants={cardsAnimation}
             animate="cardTwoBegin"
-            className="bg-white rounded-lg shadow-md p-4 w-44 h-72 absolute -top-72 right-8"
+            className="bg-white rounded-lg shadow-md p-4 w-44 h-72 absolute -top-72 right-8 hidden lg:block"
           ></motion.div>
         </div>
       </section>

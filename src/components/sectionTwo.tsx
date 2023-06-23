@@ -7,8 +7,8 @@ function SectionTwo() {
 
   return (
     <>
-      <section className="h-full w-full">
-        <div className="overflow-hidden">
+      <section className="min-h-full w-full my-2">
+        <div className="overflow-hidden relative">
           <div className="inset-0 flex flex-col gap-2 opacity-30">
             <InfiniteLoopSlider duration={30} reverse={false}>
               {[...new Array(ROWS)].map((_, i) => (
@@ -21,9 +21,19 @@ function SectionTwo() {
               ))}
             </InfiniteLoopSlider>
           </div>
-          <div className="h-64 inset-48 flex items-center justify-center z-10">
-            <div className="w-48 h-64 bg-slate-300"></div>
-            <p>dsds</p>
+          <div className="bg-gray-800 absolute p-4 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-82 h-96 rounded-md border-solid border-2 border-rose-300 hover:shadow-inner hover:shadow-rose-400 flex flex-col gap-20">
+            <div className="border-b-2">
+              <h1 className="text-2xl font-bold text-white">Weekly Card</h1>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p>Your favorite card will be delivered weekly.</p>
+              <p>Discover every card.</p>
+            </div>
+            <div className="flex justify-start">
+              <button className="text-white bg-gray-500 px-4 py-2 rounded-md hover:bg-gray-600 transition-colors duration-300">
+                Check Cards
+              </button>
+            </div>
           </div>
         </div>
       </section>

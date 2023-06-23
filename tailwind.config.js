@@ -298,6 +298,7 @@ module.exports = {
       },
       container: {
         center: true,
+        // padding: ".1rem",
       },
       // fontFamily: {
       //   header: ["goudy-bookletter-1911", "serif"],
