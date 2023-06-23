@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { IconType } from "react-icons";
 import { SlArrowUp } from "react-icons/sl";
 import { CgProfile, CgLogOut } from "react-icons/cg";
+import ImageAvatar, { bot } from "./small/avatar";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,18 +65,6 @@ function Navbar() {
   );
 }
 
-function ImageAvatar({ src }: { src: string }) {
-  return (
-    <>
-      <img
-        className="h-7 w-7 rounded-full shadow-outline-normal"
-        src={src}
-        alt="avatar"
-      ></img>
-    </>
-  );
-}
-
 function ActionList({
   icon: Icon,
   text,
@@ -100,12 +89,6 @@ function ActionList({
     </>
   );
 }
-
-const bot = {
-  imageUrl:
-    "https://cdn.discordapp.com/avatars/542770757382569994/fad5207a33644450890312e26a2183fb.webp?size=128",
-  name: "Nero",
-};
 
 const iconVariants = {
   open: { rotate: 180 },
