@@ -1,7 +1,7 @@
 function Footer() {
   return (
     <>
-      <footer>hello</footer>
+      <footer className="bg-waveColor"></footer>
     </>
   );
 }

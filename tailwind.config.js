@@ -256,6 +256,7 @@ module.exports = {
         discordBlue: "#5865f2",
         discordGreen: "#23a559",
         discordDark: "#1e1f22",
+        waveColor: "#0099FF",
       },
       spacing: {
         7: "1.75rem",
