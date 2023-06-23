@@ -1,10 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { IconType } from "react-icons";
 import { SlArrowUp } from "react-icons/sl";
 import { CgProfile, CgLogOut } from "react-icons/cg";
 import ImageAvatar, { bot } from "./small/avatar";
+import Link from "next/link";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,10 +31,10 @@ function Navbar() {
   return (
     <>
       <nav className="flex justify-between p-4">
-        <div className="flex justify-between items-center gap-2">
+        <Link href="/" className="flex justify-between items-center gap-2">
           <ImageAvatar src={bot.imageUrl}></ImageAvatar>
           <h2>Nero</h2>
-        </div>
+        </Link>
 
         <motion.div
           animate={isOpen ? "open" : "closed"}
