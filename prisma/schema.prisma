@@ -10,9 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  token String
-  userID String
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  token     String
+  authorId  String
+  email     String
+  language  String
+  username  String
 }
