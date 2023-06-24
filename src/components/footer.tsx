@@ -8,7 +8,8 @@ import Link from "next/link";
 import Select from "react-tailwindcss-select";
 import { useState } from "react";
 import { SelectValue } from "react-tailwindcss-select/dist/components/type";
-import { ReactSVG } from "react-svg";
+
+import LanguageSelector from "./small/languageSelector";
 
 const options: any = [
   { value: "german", label: "Germany" },
@@ -17,16 +18,21 @@ const options: any = [
 
 function Footer() {
   const [animal, setAnimal] = useState<any | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
 
-  const handleChange = (value: SelectValue) => {
-    console.log("value:", value);
-    setAnimal(value);
+  const handleLanguageChange = (language: string) => {
+    setSelectedLanguage(language);
   };
 
-  const handleSVGInjection = (svg: any) => {
-    svg.setAttribute("height", "20px");
-    svg.setAttribute("width", "20px");
-  };
+  // const handleChange = (value: SelectValue) => {
+  //   console.log("value:", value);
+  //   setAnimal(value);
+  // };
+
+  // const handleSVGInjection = (svg: any) => {
+  //   svg.setAttribute("height", "20px");
+  //   svg.setAttribute("width", "20px");
+  // };
 
   return (
     <>
@@ -91,7 +97,7 @@ function Footer() {
             </ul>
           </div>
           <div className="min-w-[11rem] cursor-pointer">
-            <Select
+            {/* <Select
               primaryColor="blue"
               placeholder={animal == null ? "English" : animal}
               value={animal}
@@ -112,6 +118,10 @@ function Footer() {
               classNames={{
                 menu: "bg-gray-700 w-44 p-0",
               }}
+            /> */}
+            <LanguageSelector
+              selectedLanguage={selectedLanguage}
+              onChange={handleLanguageChange}
             />
           </div>
         </div>
