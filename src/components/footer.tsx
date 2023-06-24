@@ -7,32 +7,24 @@ import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import Link from "next/link";
 import Select from "react-tailwindcss-select";
 import { useState } from "react";
+import { languageOptions } from "@/utils/languageOptions";
+import { ReactSVG } from "react-svg";
 import { SelectValue } from "react-tailwindcss-select/dist/components/type";
 
-import LanguageSelector from "./small/languageSelector";
-
-const options: any = [
-  { value: "german", label: "Germany" },
-  { value: "english", label: "English" },
-];
-
 function Footer() {
-  const [animal, setAnimal] = useState<any | null>(null);
-  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [selectedLanguage, setSelectedLanguage] = useState<any | null>(
+    languageOptions[0]
+  );
 
-  const handleLanguageChange = (language: string) => {
-    setSelectedLanguage(language);
+  const handleChange = (value: SelectValue) => {
+    console.log("value:", value);
+    setSelectedLanguage(value);
   };
 
-  // const handleChange = (value: SelectValue) => {
-  //   console.log("value:", value);
-  //   setAnimal(value);
-  // };
-
-  // const handleSVGInjection = (svg: any) => {
-  //   svg.setAttribute("height", "20px");
-  //   svg.setAttribute("width", "20px");
-  // };
+  const handleSVGInjection = (svg: any) => {
+    svg.setAttribute("height", "20px");
+    svg.setAttribute("width", "20px");
+  };
 
   return (
     <>
@@ -52,7 +44,7 @@ function Footer() {
             </p>
           </div>
           <div className="md:ml-8">
-            <h6 className="mb-7 text-2xl font-semibold">Contact</h6>
+            <h6 className="mb-7 text-xl font-semibold">Contact</h6>
             <ul className="flex flex-col gap-4 cursor-pointer">
               <li className="flex gap-2 items-center hover:text-gray-500 transition-all">
                 <MdEmail></MdEmail>
@@ -65,7 +57,7 @@ function Footer() {
             </ul>
           </div>
           <div className="md:ml-8">
-            <h6 className="mb-7 text-2xl font-semibold">Social</h6>
+            <h6 className="mb-7 text-xl font-semibold">Social</h6>
             <ul className="flex flex-row gap-6 cursor-pointer">
               <li className="hover:text-gray-500 transition-all">
                 <Link href="/">
@@ -80,7 +72,7 @@ function Footer() {
             </ul>
           </div>
           <div className="md:ml-8">
-            <h6 className="mb-7 text-2xl font-semibold">Discover More</h6>
+            <h6 className="mb-7 text-xl font-semibold">Discover More</h6>
             <ul className="flex flex-col gap-4 cursor-pointer">
               <li className="flex gap-2 items-center hover:text-gray-500 transition-all">
                 <HiUserGroup></HiUserGroup>
@@ -97,19 +89,19 @@ function Footer() {
             </ul>
           </div>
           <div className="min-w-[11rem] cursor-pointer">
-            {/* <Select
-              primaryColor="blue"
-              placeholder={animal == null ? "English" : animal}
-              value={animal}
+            <h6 className="mb-7 text-xl font-semibold">Language</h6>
+            <Select
+              primaryColor="gray"
+              value={selectedLanguage}
               onChange={handleChange}
-              options={options}
+              options={languageOptions}
               formatOptionLabel={(data) => (
                 <li className="list-none h-8 my-2 cursor-pointer items-center flex hover:bg-gray-600 transition-all duration-700 rounded-md">
                   <span className="flex items-center gap-3 mx-2">
                     <ReactSVG
                       beforeInjection={handleSVGInjection}
-                      src={`/${data.value}.svg`}
-                      title={`${data.value}'s flag`}
+                      src={`/flags/${data.value}.svg`}
+                      title={`${data.label}'s flag`}
                     />
                     {data.label}
                   </span>
@@ -118,10 +110,6 @@ function Footer() {
               classNames={{
                 menu: "bg-gray-700 w-44 p-0",
               }}
-            /> */}
-            <LanguageSelector
-              selectedLanguage={selectedLanguage}
-              onChange={handleLanguageChange}
             />
           </div>
         </div>

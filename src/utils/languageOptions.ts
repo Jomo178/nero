@@ -1,12 +1,10 @@
 export const languageOptions = [
   {
-    code: "en",
-    name: "English",
-    flag: "/flags/uk.svg",
+    value: "uk",
+    label: "English",
   },
   {
-    code: "de",
-    name: "German",
-    flag: "/flags/germany.svg",
+    value: "germany",
+    label: "German",
   },
 ];
