@@ -28,6 +28,14 @@ function Navbar() {
     };
   }, []);
 
+  const handleLogin = () => {
+    window.open(
+      bot.login,
+      "_blank",
+      `width=500,height=${window.screen.availHeight}`
+    );
+  };
+
   return (
     <>
       <nav className="flex justify-between p-4">
@@ -36,7 +44,8 @@ function Navbar() {
           <h2>Nero</h2>
         </Link>
 
-        <motion.div
+        <button onClick={handleLogin}>Login</button>
+        {/* <motion.div
           animate={isOpen ? "open" : "closed"}
           className="flex justify-between items-center gap-2 relative hover:cursor-pointer z-10"
           onClick={() => setIsOpen((pv) => !pv)}
@@ -60,7 +69,7 @@ function Navbar() {
             <ActionList icon={CgProfile} text="Profile"></ActionList>
             <ActionList icon={CgLogOut} text="LogOut" color="red"></ActionList>
           </motion.ul>
-        </motion.div>
+        </motion.div> */}
       </nav>
     </>
   );
