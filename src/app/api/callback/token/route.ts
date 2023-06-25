@@ -1,11 +1,10 @@
 import { prisma } from "@/db";
 import { NextResponse } from "next/server";
 
-export async function POST(
-  request: Request,
-  { params }: { params: { code: string | undefined } }
-) {
-  const code = params.code;
+export async function POST(request: Request) {
+  const body = await request.text();
+  const parsedBody = new URLSearchParams(body);
+  const code = parsedBody.get("code");
 
   if (!code) return NextResponse.error();
 
@@ -29,7 +28,7 @@ export async function POST(
 
   const responseTokenData: access_token_response = await responseToken.json();
 
-  let { access_token, refresh_token, expires_in } = responseTokenData;
+  let { access_token, refresh_token } = responseTokenData;
 
   const randomToken = generateRandomString(59);
 
@@ -42,11 +41,31 @@ export async function POST(
 
   const responseInfoData = await responseInfo.json();
 
-  const findUser = await prisma.user.findFirst({
-    where: {},
+  await prisma.user.upsert({
+    where: {
+      authorId: responseInfoData.id,
+    },
+    update: {
+      token: randomToken,
+      access_token,
+      refresh_token,
+      logged_in: new Date(),
+      language: responseInfoData.locale,
+      username: responseInfoData.global_name,
+    },
+    create: {
+      authorId: responseInfoData.id,
+      token: randomToken,
+      email: responseInfoData.email,
+      language: responseInfoData.locale,
+      username: responseInfoData.global_name,
+      access_token,
+      refresh_token,
+      logged_in: new Date(),
+    },
   });
 
-  return NextResponse.json({ product: "ddd" });
+  return NextResponse.json({ token: randomToken });
 }
 
 function generateRandomString(length: number): string {

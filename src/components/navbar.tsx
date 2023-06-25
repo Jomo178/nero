@@ -6,10 +6,14 @@ import { SlArrowUp } from "react-icons/sl";
 import { CgProfile, CgLogOut } from "react-icons/cg";
 import ImageAvatar, { bot } from "./small/avatar";
 import Link from "next/link";
+import { UserContext } from "@/app/page";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const motionDivRef = useRef<HTMLDivElement>(null);
+  const userData = useContext(UserContext);
+
+  console.log(userData);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

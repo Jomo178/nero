@@ -14,11 +14,13 @@ model User {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  token         String
+  token         String   @unique
   access_token  String
   refresh_token String
-  email         String
-  language      String
-  authorId      String
-  username      String
+  expires_in    Int      @default(604800)
+  logged_in     DateTime
+  email         String   @unique
+  language      String?
+  authorId      String   @unique
+  username      String?
 }
