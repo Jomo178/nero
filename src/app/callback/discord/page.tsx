@@ -52,9 +52,6 @@
 // }
 "use client";
 import { useEffect } from "react";
-import { setConfig } from "next/config";
-import * as publicRuntimeConfig from "../../../../next.config";
-setConfig({ publicRuntimeConfig });
 
 interface callbackParams {
   searchParams: {
@@ -72,7 +69,6 @@ const Home = ({ searchParams }: callbackParams) => {
         return;
       }
 
-      console.log(publicRuntimeConfig.CLIENT_ID);
       const data = new URLSearchParams();
       data.append("client_id", "1122188019810717819");
       data.append("client_secret", "JLhTOX5PuzghvkHsMZyQrQqT3XOLLmUM");
@@ -89,17 +85,12 @@ const Home = ({ searchParams }: callbackParams) => {
       });
 
       if (!response.ok) {
-        console.log(response);
         return;
       }
 
-      const datas = await response.json();
+      localStorage.setItem("test", "sdjaskjdais");
 
-      // Perform any necessary actions with the response data
-      console.log(datas);
-
-      // Close the current tab/window
-      // return window.close();
+      return window.close();
     };
 
     fetchData();

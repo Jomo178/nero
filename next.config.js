@@ -1,5 +1,4 @@
 /** @type {import('next').NextConfig} */
-import { runtimeConfig } from "./runtimeConfig";
 
 const nextConfig = {
   images: {
@@ -15,7 +14,6 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-  publicRuntimeConfig: runtimeConfig,
 };
 
 module.exports = nextConfig;
