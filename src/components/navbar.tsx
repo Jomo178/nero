@@ -15,11 +15,12 @@ import Link from "next/link";
 import { UserContext } from "@/app/page";
 import { avatar } from "@/utils/types";
 import { FaDiscord } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const motionDivRef = useRef<HTMLDivElement>(null);
-  const [userData, setUserData] = useContext(UserContext);
+  const router = useRouter();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -39,18 +40,22 @@ function Navbar() {
   }, []);
 
   const handleLogin = () => {
-    const test = window.open(
+    const popup = window.open(
       bot.login,
       "_blank",
       `width=500,height=${window.screen.availHeight}`
     );
 
-    window.onbeforeunload = () => {
-      if (test?.closed) {
-        console.log("Window closed!");
-        // Perform any additional actions you want here
+    const checkLogin = setInterval(() => {
+      if (localStorage.getItem("token")) {
+        clearInterval(checkLogin);
+        router.push("/profile");
       }
-    };
+
+      if (popup && popup.closed) {
+        clearInterval(checkLogin);
+      }
+    }, 1000);
   };
 
   const handleLogout = () => {
@@ -68,50 +73,49 @@ function Navbar() {
 
         <UserContext.Consumer>
           {(user) => {
-            // return <p>{user.id}</p>;
-            // if (user != "") {
-            //   return (
-            //     <motion.div
-            //       animate={isOpen ? "open" : "closed"}
-            //       className="flex justify-between items-center gap-2 relative hover:cursor-pointer z-10"
-            //       onClick={() => setIsOpen((pv) => !pv)}
-            //       ref={motionDivRef}
-            //     >
-            //       <h2>{user.username}</h2>
-            //       <ImageAvatar src={avatar(user.id, user.avatar)}></ImageAvatar>
-            //       <motion.span
-            //         variants={iconVariants}
-            //         transition={{ type: "tween", delay: 0.2 }}
-            //       >
-            //         <SlArrowUp size={18}></SlArrowUp>
-            //       </motion.span>
+            if (user != null) {
+              return (
+                <motion.div
+                  animate={isOpen ? "open" : "closed"}
+                  className="flex justify-between items-center gap-2 relative hover:cursor-pointer z-10"
+                  onClick={() => setIsOpen((pv) => !pv)}
+                  ref={motionDivRef}
+                >
+                  <h2>{user.username}</h2>
+                  <ImageAvatar src={avatar(user.id, user.avatar)}></ImageAvatar>
+                  <motion.span
+                    variants={iconVariants}
+                    transition={{ type: "tween", delay: 0.2 }}
+                  >
+                    <SlArrowUp size={18}></SlArrowUp>
+                  </motion.span>
 
-            //       <motion.ul
-            //         initial={wrapperVariants.closed}
-            //         variants={wrapperVariants}
-            //         style={{ originY: "top", translateX: "0%" }}
-            //         className="flex flex-col absolute top-8 bg-discordDarkBG min-w-[144px] rounded-md"
-            //       >
-            //         <ActionList icon={CgProfile} text="Profile"></ActionList>
-            //         <ActionList
-            //           icon={CgLogOut}
-            //           text="LogOut"
-            //           color="red"
-            //           onClick={handleLogout}
-            //         ></ActionList>
-            //       </motion.ul>
-            //     </motion.div>
-            //   );
-            // } else
-            return (
-              <button
-                onClick={handleLogin}
-                className="text-white flex gap-3 items-center bg-blue-800 px-4 py-2 rounded-md hover:bg-blue-900 transition-colors duration-300"
-              >
-                <FaDiscord></FaDiscord>
-                Login
-              </button>
-            );
+                  <motion.ul
+                    initial={wrapperVariants.closed}
+                    variants={wrapperVariants}
+                    style={{ originY: "top", translateX: "0%" }}
+                    className="flex flex-col absolute top-8 bg-discordDarkBG min-w-[144px] rounded-md"
+                  >
+                    <ActionList icon={CgProfile} text="Profile"></ActionList>
+                    <ActionList
+                      icon={CgLogOut}
+                      text="LogOut"
+                      color="red"
+                      onClick={handleLogout}
+                    ></ActionList>
+                  </motion.ul>
+                </motion.div>
+              );
+            } else
+              return (
+                <button
+                  onClick={handleLogin}
+                  className="text-white flex gap-3 items-center bg-blue-800 px-4 py-2 rounded-md hover:bg-blue-900 transition-colors duration-300"
+                >
+                  <FaDiscord></FaDiscord>
+                  Login
+                </button>
+              );
           }}
         </UserContext.Consumer>
       </nav>

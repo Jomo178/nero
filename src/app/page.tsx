@@ -8,7 +8,7 @@ import SectionTwo from "@/components/sectionTwo";
 import { users_discord_info_obj } from "@/utils/types";
 import Loading from "./loader";
 
-export const UserContext = createContext<any>([null, () => {}]);
+export const UserContext = createContext<users_discord_info_obj | null>(null);
 
 export default function Home() {
   const [userData, setUserData] = useState<users_discord_info_obj | null>(null);
@@ -41,7 +41,7 @@ export default function Home() {
   }
 
   return (
-    <UserContext.Provider value={[userData, setUserData]}>
+    <UserContext.Provider value={userData}>
       <Navbar></Navbar>
       <SectionOne></SectionOne>
       <SectionTwo></SectionTwo>

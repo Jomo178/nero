@@ -1,6 +1,5 @@
 "use client";
-import { UserContext } from "@/app/page";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 
 interface callbackParams {
   searchParams: {
@@ -11,13 +10,11 @@ interface callbackParams {
 
 const Home = ({ searchParams }: callbackParams) => {
   const { code, state } = searchParams;
-  const [userData, setUserData] = useContext(UserContext);
 
   useEffect(() => {
     const fetchData = async () => {
       if (!code) {
-        console.log("No code");
-        return;
+        return (window.location.href = "/");
       }
 
       const postData = new URLSearchParams();
@@ -29,12 +26,10 @@ const Home = ({ searchParams }: callbackParams) => {
       });
 
       if (!response.ok) {
-        return;
+        return (window.location.href = "/");
       }
 
       const data = await response.json();
-
-      setUserData(data.userInfo);
 
       localStorage.setItem("token", data.token);
 
@@ -42,7 +37,7 @@ const Home = ({ searchParams }: callbackParams) => {
     };
 
     fetchData();
-  }, [code, setUserData]);
+  }, [code]);
 
   return null;
 };
