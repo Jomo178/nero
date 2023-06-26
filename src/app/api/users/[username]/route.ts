@@ -1,15 +1,6 @@
 import { prisma } from "@/db";
 import { NextResponse } from "next/server";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { username: string } }
-) {
-  const slug = params.username; // 'a', 'b', or 'c'
-
-  return NextResponse.json({ product: "@me" + slug });
-}
-
 export async function POST(
   request: Request,
   { params }: { params: { username: string } }
@@ -33,7 +24,41 @@ export async function POST(
           { status: 400 }
         );
 
-      return NextResponse.json(findUser);
+      const fetchUsersData = await fetch(
+        `https://discord.com/api/v10/users/@me`,
+        {
+          headers: {
+            Authorization: `Bearer ${findUser.access_token}`,
+          },
+          method: "GET",
+        }
+      );
+      const usersData = await fetchUsersData.json();
+
+      // const keysToDelete = [
+      //   "createdAt",
+      //   "updatedAt",
+      //   "token",
+      //   "access_token",
+      //   "refresh_token",
+      //   "expires_in",
+      //   "logged_in",
+      //   "email",
+      //   "authorId",
+      //   "mfa_enabled",
+      //   "verified",
+      // ];
+
+      // const completeData = {
+      //   ...findUser,
+      //   ...usersData,
+      // };
+
+      // keysToDelete.forEach((key: string) => delete completeData[key]);
+
+      delete usersData["email"];
+
+      return NextResponse.json(usersData);
     } else {
       return NextResponse.json(
         { message: "Unauthorized", status: 401 },
@@ -41,6 +66,4 @@ export async function POST(
       );
     }
   }
-
-  // return NextResponse.json({ product: "@me" + username });
 }

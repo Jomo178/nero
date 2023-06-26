@@ -18,11 +18,11 @@ export default function Home() {
     const token = localStorage.getItem("token");
 
     if (token) {
-      fetch(`https://discord.com/api/v10/users/@me`, {
+      fetch(`api//users/@me`, {
         headers: {
-          Authorization: `Bearer gOwJKiOYPWVEOBh1zKqYS4dK6hSB3F`,
+          Authorization: `Bearer ${token}`,
         },
-        method: "GET",
+        method: "POST",
       })
         .then((response) => response.json())
         .then((data) => {

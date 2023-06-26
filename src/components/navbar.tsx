@@ -46,16 +46,17 @@ function Navbar() {
       `width=500,height=${window.screen.availHeight}`
     );
 
-    const checkLogin = setInterval(() => {
-      if (localStorage.getItem("token")) {
-        clearInterval(checkLogin);
-        router.push("/profile");
-      }
+    const receiveMessage = (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) return;
 
-      if (popup && popup.closed) {
-        clearInterval(checkLogin);
+      if (event.data) {
+        const fetchedData = event.data;
+        localStorage.setItem("token", fetchedData.token);
+        router.push(`/profile/${fetchedData.userInfo.id}`);
       }
-    }, 1000);
+    };
+
+    window.addEventListener("message", receiveMessage);
   };
 
   const handleLogout = () => {
@@ -96,7 +97,11 @@ function Navbar() {
                     style={{ originY: "top", translateX: "0%" }}
                     className="flex flex-col absolute top-8 bg-discordDarkBG min-w-[144px] rounded-md"
                   >
-                    <ActionList icon={CgProfile} text="Profile"></ActionList>
+                    <ActionList
+                      icon={CgProfile}
+                      text="Profile"
+                      onClick={() => router.push(`/profile/${user.id}`)}
+                    ></ActionList>
                     <ActionList
                       icon={CgLogOut}
                       text="LogOut"

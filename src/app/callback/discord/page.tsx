@@ -31,7 +31,7 @@ const Home = ({ searchParams }: callbackParams) => {
 
       const data = await response.json();
 
-      localStorage.setItem("token", data.token);
+      window.opener.postMessage(data);
 
       return window.close();
     };
