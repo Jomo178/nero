@@ -5,11 +5,14 @@ import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import SectionOne from "@/components/sectionOne";
 import SectionTwo from "@/components/sectionTwo";
+import { users_discord_info_obj } from "@/utils/types";
+import Loading from "./loader";
 
-export const UserContext = createContext(null);
+export const UserContext = createContext<any>([null, () => {}]);
 
 export default function Home() {
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<users_discord_info_obj | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -22,21 +25,27 @@ export default function Home() {
         method: "GET",
       })
         .then((response) => response.json())
-        .then((data) => console.log(data))
-        .catch((error) => console.error("Error fetching user data:", error));
-    }
-
-    console.log(userData);
+        .then((data) => {
+          setUserData(data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+          setLoading(false);
+        });
+    } else setLoading(false);
   }, []);
 
+  if (loading) {
+    return <Loading></Loading>;
+  }
+
   return (
-    <>
-      <UserContext.Provider value={userData}>
-        <Navbar></Navbar>
-        <SectionOne></SectionOne>
-        <SectionTwo></SectionTwo>
-        <Footer></Footer>
-      </UserContext.Provider>
-    </>
+    <UserContext.Provider value={[userData, setUserData]}>
+      <Navbar></Navbar>
+      <SectionOne></SectionOne>
+      <SectionTwo></SectionTwo>
+      <Footer></Footer>
+    </UserContext.Provider>
   );
 }

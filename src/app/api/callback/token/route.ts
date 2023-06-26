@@ -1,4 +1,5 @@
 import { prisma } from "@/db";
+import { access_token_response } from "@/utils/types";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -65,7 +66,7 @@ export async function POST(request: Request) {
     },
   });
 
-  return NextResponse.json({ token: randomToken });
+  return NextResponse.json({ token: randomToken, userInfo: responseInfoData });
 }
 
 function generateRandomString(length: number): string {
@@ -78,11 +79,3 @@ function generateRandomString(length: number): string {
   }
   return result;
 }
-
-type access_token_response = {
-  access_token: string;
-  token_type: string;
-  expires_in: number;
-  refresh_token: string;
-  scope: string;
-};
