@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { bot } from "./small/avatar";
+import { bot } from "../small/avatar";
 
 function SectionOne() {
   return (

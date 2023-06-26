@@ -1,3 +1,7 @@
+"use client";
+import Footer from "@/components/lib/footer";
+import Navbar from "@/components/lib/navbar";
+
 interface callbackParams {
   params: {
     id: string | undefined;
@@ -7,7 +11,12 @@ interface callbackParams {
 const Home = ({ params }: callbackParams) => {
   const id = params.id;
 
-  return <p>{id}</p>;
+  return (
+    <>
+      <Navbar></Navbar>
+      <Footer></Footer>
+    </>
+  );
 };
 
 export default Home;

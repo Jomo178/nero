@@ -10,9 +10,9 @@ import {
 import { IconType } from "react-icons";
 import { SlArrowUp } from "react-icons/sl";
 import { CgProfile, CgLogOut } from "react-icons/cg";
-import ImageAvatar, { bot } from "./small/avatar";
+import ImageAvatar, { bot } from "../small/avatar";
 import Link from "next/link";
-import { UserContext } from "@/app/page";
+import { UserContext } from "@/app/layout";
 import { avatar } from "@/utils/types";
 import { FaDiscord } from "react-icons/fa";
 import { useRouter } from "next/navigation";

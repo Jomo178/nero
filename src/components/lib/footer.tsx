@@ -1,4 +1,4 @@
-import ImageAvatar, { bot } from "./small/avatar";
+import ImageAvatar, { bot } from "../small/avatar";
 import { MdEmail } from "react-icons/md";
 import { FaDiscord, FaInstagram, FaTwitter } from "react-icons/fa";
 import { HiUserGroup } from "react-icons/hi";
