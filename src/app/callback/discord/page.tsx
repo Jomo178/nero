@@ -30,8 +30,6 @@ const Home = ({ searchParams }: callbackParams) => {
       }
 
       const data = await response.json();
-      console.log(data);
-
       window.opener.postMessage(data);
 
       return window.close();

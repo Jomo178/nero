@@ -1,26 +1,72 @@
 "use client";
 import { motion } from "framer-motion";
-import {
-  MouseEventHandler,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { MouseEventHandler, useEffect, useRef, useState } from "react";
 import { IconType } from "react-icons";
 import { SlArrowUp } from "react-icons/sl";
 import { CgProfile, CgLogOut } from "react-icons/cg";
 import ImageAvatar, { bot } from "../small/avatar";
 import Link from "next/link";
-import { UserContext } from "@/app/page";
 import { avatar } from "@/utils/types";
 import { FaDiscord } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { useGlobalContext } from "@/app/Context/user";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const motionDivRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const { data, setData } = useGlobalContext();
+
+  const handleProfile = () => {
+    if (data == null) {
+      return (
+        <button
+          onClick={handleLogin}
+          className="text-white flex gap-3 items-center bg-blue-800 px-4 py-2 rounded-md hover:bg-blue-900 transition-colors duration-300"
+        >
+          <FaDiscord></FaDiscord>
+          Login
+        </button>
+      );
+    }
+
+    return (
+      <motion.div
+        animate={isOpen ? "open" : "closed"}
+        className="flex justify-between items-center gap-2 relative hover:cursor-pointer z-10"
+        onClick={() => setIsOpen((pv) => !pv)}
+        ref={motionDivRef}
+      >
+        <h2>{data.username}</h2>
+        <ImageAvatar src={avatar(data.id, data.avatar)}></ImageAvatar>
+        <motion.span
+          variants={iconVariants}
+          transition={{ type: "tween", delay: 0.2 }}
+        >
+          <SlArrowUp size={18}></SlArrowUp>
+        </motion.span>
+
+        <motion.ul
+          initial={wrapperVariants.closed}
+          variants={wrapperVariants}
+          style={{ originY: "top", translateX: "0%" }}
+          className="flex flex-col absolute top-8 bg-discordDarkBG min-w-[144px] rounded-md"
+        >
+          <ActionList
+            icon={CgProfile}
+            text="Profile"
+            onClick={() => router.push(`/profile/${data.id}`)}
+          ></ActionList>
+          <ActionList
+            icon={CgLogOut}
+            text="LogOut"
+            color="red"
+            onClick={handleLogout}
+          ></ActionList>
+        </motion.ul>
+      </motion.div>
+    );
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -40,7 +86,7 @@ function Navbar() {
   }, []);
 
   const handleLogin = () => {
-    const popup = window.open(
+    window.open(
       bot.login,
       "_blank",
       `width=500,height=${window.screen.availHeight}`
@@ -63,7 +109,7 @@ function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.reload();
+    setData(null);
   };
 
   return (
@@ -73,58 +119,7 @@ function Navbar() {
           <ImageAvatar src={bot.imageUrl}></ImageAvatar>
           <h2>Nero</h2>
         </Link>
-
-        <UserContext.Consumer>
-          {(user) => {
-            if (user != null) {
-              return (
-                <motion.div
-                  animate={isOpen ? "open" : "closed"}
-                  className="flex justify-between items-center gap-2 relative hover:cursor-pointer z-10"
-                  onClick={() => setIsOpen((pv) => !pv)}
-                  ref={motionDivRef}
-                >
-                  <h2>{user.username}</h2>
-                  <ImageAvatar src={avatar(user.id, user.avatar)}></ImageAvatar>
-                  <motion.span
-                    variants={iconVariants}
-                    transition={{ type: "tween", delay: 0.2 }}
-                  >
-                    <SlArrowUp size={18}></SlArrowUp>
-                  </motion.span>
-
-                  <motion.ul
-                    initial={wrapperVariants.closed}
-                    variants={wrapperVariants}
-                    style={{ originY: "top", translateX: "0%" }}
-                    className="flex flex-col absolute top-8 bg-discordDarkBG min-w-[144px] rounded-md"
-                  >
-                    <ActionList
-                      icon={CgProfile}
-                      text="Profile"
-                      onClick={() => router.push(`/profile/${user.id}`)}
-                    ></ActionList>
-                    <ActionList
-                      icon={CgLogOut}
-                      text="LogOut"
-                      color="red"
-                      onClick={handleLogout}
-                    ></ActionList>
-                  </motion.ul>
-                </motion.div>
-              );
-            } else
-              return (
-                <button
-                  onClick={handleLogin}
-                  className="text-white flex gap-3 items-center bg-blue-800 px-4 py-2 rounded-md hover:bg-blue-900 transition-colors duration-300"
-                >
-                  <FaDiscord></FaDiscord>
-                  Login
-                </button>
-              );
-          }}
-        </UserContext.Consumer>
+        {handleProfile()}
       </nav>
     </>
   );

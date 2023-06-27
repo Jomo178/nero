@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 const Loader = () => {
-  const dotCount = 3; // Number of dots
+  const dotCount = 3;
 
   const textVariants = {
     initial: { opacity: 0, y: -20 },

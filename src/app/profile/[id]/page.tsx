@@ -1,8 +1,6 @@
 "use client";
 import Footer from "@/components/lib/footer";
 import Navbar from "@/components/lib/navbar";
-import { UserContext } from "@/app/page";
-import { useContext } from "react";
 
 interface callbackParams {
   params: {
@@ -10,11 +8,8 @@ interface callbackParams {
   };
 }
 
-const Page = ({ params }: callbackParams) => {
+const Home = ({ params }: callbackParams) => {
   const id = params.id;
-  const idk = useContext(UserContext);
-
-  console.log(idk);
 
   return (
     <>
@@ -24,4 +19,4 @@ const Page = ({ params }: callbackParams) => {
   );
 };
 
-export default Page;
+export default Home;
