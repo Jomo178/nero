@@ -12,7 +12,7 @@ import { SlArrowUp } from "react-icons/sl";
 import { CgProfile, CgLogOut } from "react-icons/cg";
 import ImageAvatar, { bot } from "../small/avatar";
 import Link from "next/link";
-import { UserContext } from "@/app/layout";
+import { UserContext } from "@/app/page";
 import { avatar } from "@/utils/types";
 import { FaDiscord } from "react-icons/fa";
 import { useRouter } from "next/navigation";
@@ -52,8 +52,10 @@ function Navbar() {
       if (event.data) {
         const fetchedData = event.data;
         localStorage.setItem("token", fetchedData.token);
-        router.push(`/profile/${fetchedData.userInfo.id}`);
+        router.push(`/profile/${fetchedData.id}`);
       }
+
+      window.removeEventListener("message", receiveMessage);
     };
 
     window.addEventListener("message", receiveMessage);

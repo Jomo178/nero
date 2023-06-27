@@ -66,7 +66,7 @@ export async function POST(request: Request) {
     },
   });
 
-  return NextResponse.json({ token: randomToken, userInfo: responseInfoData });
+  return NextResponse.json({ token: randomToken, id: responseInfoData.id });
 }
 
 function generateRandomString(length: number): string {
