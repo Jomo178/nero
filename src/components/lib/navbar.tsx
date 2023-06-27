@@ -9,7 +9,7 @@ import Link from "next/link";
 import { avatar } from "@/utils/types";
 import { FaDiscord } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import { useGlobalContext } from "@/app/Context/user";
+import { useGlobalContext } from "@/utils/Context/user";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);

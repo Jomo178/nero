@@ -1,6 +1,7 @@
 "use client";
 import Footer from "@/components/lib/footer";
 import Navbar from "@/components/lib/navbar";
+import ProfileHeader from "@/components/profile/header";
 
 interface callbackParams {
   params: {
@@ -14,7 +15,8 @@ const Home = ({ params }: callbackParams) => {
   return (
     <>
       <Navbar></Navbar>
-      <Footer></Footer>
+      <ProfileHeader></ProfileHeader>
+      {/* <Footer></Footer> */}
     </>
   );
 };

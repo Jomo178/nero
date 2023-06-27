@@ -9,7 +9,7 @@ import {
   useEffect,
 } from "react";
 import { users_discord_info_obj } from "@/utils/types";
-import Loading from "../loader";
+import Loading from "../../app/loader";
 
 interface ContextProps {
   data: users_discord_info_obj | null;
