@@ -40,15 +40,16 @@ export const GlobalContextProvider = ({
             },
             method: "POST",
           });
-          const data = await response.json();
-          setData(data);
-          setLoading(false);
-        } else {
-          setLoading(false);
+          if (response.ok) {
+            const data = await response.json();
+            setData(data);
+          } else {
+            localStorage.removeItem("token");
+          }
         }
       } catch (error) {
-        console.log("osdal");
         localStorage.removeItem("token");
+      } finally {
         setLoading(false);
       }
     };
