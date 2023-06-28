@@ -4,6 +4,7 @@ export type users_discord_info_obj = {
   avatar: string;
   email: string;
   avatar_decoration: null;
+  discriminator: string;
   global_name: string;
   public_flags: number;
   flags: number;
@@ -22,11 +23,13 @@ export type access_token_response = {
   scope: string;
 };
 
-export function avatar(id: string, avatar: string): string {
+export function avatar(
+  id: string,
+  avatar: string,
+  discriminator: string
+): string {
   if (avatar == null || avatar == undefined) {
-    return `https://cdn.discordapp.com/embed/avatars/${Math.floor(
-      Math.random() * (5 - 1 + 1) + 1
-    )}.png`;
+    return `https://cdn.discordapp.com/embed/avatars/${discriminator}.png`;
   } else {
     return `https://cdn.discordapp.com/avatars/${id}/${avatar}.${
       avatar.startsWith("a_") ? "gif" : "png"

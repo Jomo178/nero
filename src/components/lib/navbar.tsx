@@ -38,7 +38,9 @@ function Navbar() {
         ref={motionDivRef}
       >
         <h2>{data.username}</h2>
-        <ImageAvatar src={avatar(data.id, data.avatar)}></ImageAvatar>
+        <ImageAvatar
+          src={avatar(data.id, data.avatar, data.discriminator)}
+        ></ImageAvatar>
         <motion.span
           variants={iconVariants}
           transition={{ type: "tween", delay: 0.2 }}
