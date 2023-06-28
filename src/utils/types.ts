@@ -23,7 +23,13 @@ export type access_token_response = {
 };
 
 export function avatar(id: string, avatar: string): string {
-  return `https://cdn.discordapp.com/avatars/${id}/${avatar}.${
-    avatar.startsWith("a_") ? "gif" : "png"
-  }`;
+  if (avatar == null || avatar == undefined) {
+    return `https://cdn.discordapp.com/embed/avatars/${Math.floor(
+      Math.random() * (5 - 1 + 1) + 1
+    )}.png`;
+  } else {
+    return `https://cdn.discordapp.com/avatars/${id}/${avatar}.${
+      avatar.startsWith("a_") ? "gif" : "png"
+    }`;
+  }
 }
