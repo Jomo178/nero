@@ -1,33 +1,27 @@
 import { ReactSVG } from "react-svg";
 import { bot } from "../small/avatar";
+import { useGlobalContext } from "@/utils/Context/user";
+import { avatar } from "@/utils/types";
 
 function ProfileHeader() {
-  const handleSVGInjection = (svg: any) => {
-    svg.setAttribute("height", "120px");
-    svg.setAttribute("width", "120px");
-  };
+  const { data, setData } = useGlobalContext();
 
   return (
-    <header className="h-full">
+    <header className="">
       <div
-        className="w-full h-[28rem] bg-no-repeat bg-center bg-cover object-cover relative"
+        className="w-full h-[28rem] bg-no-repeat bg-center bg-cover relative rounded-3xl"
         style={{
           backgroundImage: `url(${bot.banner})`,
         }}
       >
         <div className="absolute bottom-0 flex w-full items-end">
-          <div className="w-full h-5 bg-black"></div>
-          <div className="relative bottom-0 bg-black rounded-full">
+          <div className="w-full h-10 bg-black rounded-lg"></div>
+          <div className="border-b-black absolute right-[5%] -top-[125%]">
             <img
-              className="rounded-full absolute top-2"
-              src={bot.imageUrl}
+              className="rounded-full border-4 border-black top-5 w-32 h-32"
+              src={avatar(data!.id, data!.avatar, data!.discriminator)}
               alt=""
             />
-            <ReactSVG
-              src="/border.svg"
-              beforeInjection={handleSVGInjection}
-              className="border-b-[1.25rem] border-black"
-            ></ReactSVG>
           </div>
         </div>
       </div>

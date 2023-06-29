@@ -100,7 +100,8 @@ function Navbar() {
       if (event.data) {
         const fetchedData = event.data;
         localStorage.setItem("token", fetchedData.token);
-        router.push(`/profile/${fetchedData.id}`);
+        setData(fetchedData.userInfo);
+        router.push(`/profile/${fetchedData.userInfo.id}`);
       }
 
       window.removeEventListener("message", receiveMessage);
