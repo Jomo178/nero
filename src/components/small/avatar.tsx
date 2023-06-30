@@ -19,7 +19,7 @@ export const bot = {
   login:
     "https://discord.com/api/oauth2/authorize?client_id=1122188019810717819&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fdiscord&response_type=code&scope=identify%20email",
   banner:
-    "https://cdn.discordapp.com/attachments/988824682704797697/1054939342348501154/Christmas_BTS_Banner.png",
+    "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/64ae6631986403.56700f4545419.jpg",
 };
 
 export default ImageAvatar;

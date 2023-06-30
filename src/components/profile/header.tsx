@@ -1,4 +1,4 @@
-import { ReactSVG } from "react-svg";
+"use client";
 import { bot } from "../small/avatar";
 import { useGlobalContext } from "@/utils/Context/user";
 import { avatar } from "@/utils/types";
@@ -16,13 +16,14 @@ function ProfileHeader() {
       >
         <div className="absolute bottom-0 flex w-full items-end">
           <div className="w-full h-10 bg-black rounded-lg"></div>
-          <div className="border-b-black absolute right-[5%] -top-[125%]">
+          <div className="border-b-black absolute left-[5%] -top-[125%]">
             <img
               className="rounded-full border-4 border-black top-5 w-32 h-32"
-              src={avatar(data!.id, data!.avatar, data!.discriminator)}
+              src={data?.avatar}
               alt=""
             />
           </div>
+          <div className="absolute right-[5%] h-12 bg-redditBG"></div>
         </div>
       </div>
     </header>

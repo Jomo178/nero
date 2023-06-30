@@ -8,7 +8,7 @@ import {
   ReactNode,
   useEffect,
 } from "react";
-import { users_discord_info_obj } from "@/utils/types";
+import { avatar, users_discord_info_obj } from "@/utils/types";
 import Loading from "../../app/loader";
 
 interface ContextProps {
@@ -42,6 +42,7 @@ export const GlobalContextProvider = ({
           });
           if (response.ok) {
             const data = await response.json();
+            data.avatar = avatar(data.id, data.avatar, data.discriminator);
             setData(data);
           } else {
             localStorage.removeItem("token");
