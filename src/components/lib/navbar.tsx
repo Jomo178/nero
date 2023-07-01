@@ -98,6 +98,11 @@ function Navbar() {
       if (event.data) {
         const fetchedData = event.data;
         localStorage.setItem("token", fetchedData.token);
+        fetchedData.userInfo.avatar = avatar(
+          fetchedData.userInfo.id,
+          fetchedData.userInfo.avatar,
+          fetchedData.userInfo.discriminator
+        );
         setData(fetchedData.userInfo);
         router.push(`/profile/${fetchedData.userInfo.id}`);
       }

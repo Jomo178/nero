@@ -41,9 +41,13 @@ export const GlobalContextProvider = ({
             method: "POST",
           });
           if (response.ok) {
-            const data = await response.json();
-            data.avatar = avatar(data.id, data.avatar, data.discriminator);
-            setData(data);
+            const {
+              userData,
+              botData,
+            }: {
+              userData?: users_discord_info_obj;
+              botData: users_discord_info_obj;
+            } = await response.json();
           } else {
             localStorage.removeItem("token");
           }

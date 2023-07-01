@@ -1,4 +1,5 @@
 import { prisma } from "@/db";
+import { avatar, users_discord_info_obj } from "@/utils/types";
 import { NextResponse } from "next/server";
 
 export async function POST(
@@ -9,61 +10,101 @@ export async function POST(
 
   if (username === "@me") {
     const authorizationHeader = request.headers.get("Authorization");
-    if (authorizationHeader) {
-      const token = authorizationHeader.split("Bearer ")[1];
-      if (!token)
-        return NextResponse.json(
-          { message: "Not Acceptable", status: 406 },
-          { status: 406 }
-        );
-
-      const findUser = await prisma.user.findFirst({ where: { token } });
-      if (!findUser)
-        return NextResponse.json(
-          { message: "Bad Request", status: 400 },
-          { status: 400 }
-        );
-
-      const fetchUsersData = await fetch(
-        `https://discord.com/api/v10/users/@me`,
-        {
-          headers: {
-            Authorization: `Bearer ${findUser.access_token}`,
-          },
-          method: "GET",
-        }
-      );
-      const usersData = await fetchUsersData.json();
-
-      // const keysToDelete = [
-      //   "createdAt",
-      //   "updatedAt",
-      //   "token",
-      //   "access_token",
-      //   "refresh_token",
-      //   "expires_in",
-      //   "logged_in",
-      //   "email",
-      //   "authorId",
-      //   "mfa_enabled",
-      //   "verified",
-      // ];
-
-      // const completeData = {
-      //   ...findUser,
-      //   ...usersData,
-      // };
-
-      // keysToDelete.forEach((key: string) => delete completeData[key]);
-
-      delete usersData["email"];
-
-      return NextResponse.json(usersData);
-    } else {
+    if (!authorizationHeader) {
       return NextResponse.json(
         { message: "Unauthorized", status: 401 },
         { status: 401 }
       );
     }
+
+    const token = authorizationHeader.split("Bearer ")[1];
+    if (!token) {
+      return NextResponse.json(
+        { message: "Not Acceptable", status: 406 },
+        { status: 406 }
+      );
+    }
+
+    const findUser = await prisma.user.findFirst({ where: { token } });
+    if (!findUser) {
+      return NextResponse.json(
+        { message: "Bad Request", status: 400 },
+        { status: 400 }
+      );
+    }
+
+    const isTokenExpired =
+      Date.now() > findUser.logged_in.getTime() + findUser.expires_in;
+
+    if (isTokenExpired) {
+    }
+
+    let userData: users_discord_info_obj | undefined;
+    let botData: users_discord_info_obj | undefined;
+
+    try {
+      [userData, botData] = await Promise.all([
+        usersDataPromise(findUser.access_token),
+        botsDataPromise(),
+      ]);
+    } catch (error) {
+      userData = undefined;
+      botData = await botsDataPromise();
+    }
+
+    userData = processAvatar(userData);
+    botData = processAvatar(botData);
+
+    return NextResponse.json({ userData, botData });
   }
+}
+
+function usersDataPromise(
+  access_token: string
+): Promise<users_discord_info_obj> {
+  return new Promise((resolve, reject) => {
+    fetch(`https://discord.com/api/v10/users/@me`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+      method: "GET",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Bad request: ${response.status}`);
+        }
+        resolve(response.json());
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+function botsDataPromise(): Promise<users_discord_info_obj> {
+  return new Promise((resolve, reject) => {
+    fetch(`https://discord.com/api/v10/users/@me`, {
+      headers: {
+        Authorization: `Bot ${process.env.CLIENT_TOKEN}`,
+      },
+      method: "GET",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Bad request: ${response.status}`);
+        }
+        resolve(response.json());
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+function processAvatar(data: users_discord_info_obj | undefined) {
+  if (data) {
+    data.avatar = avatar(data.id, data.avatar, data.discriminator);
+    delete data.email;
+  }
+  return data;
 }

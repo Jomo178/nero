@@ -7,7 +7,7 @@ function ProfileHeader() {
   const { data, setData } = useGlobalContext();
 
   return (
-    <header className="">
+    <header className="mt-6">
       <div
         className="w-full h-[28rem] bg-no-repeat bg-center bg-cover relative rounded-3xl"
         style={{
@@ -23,7 +23,20 @@ function ProfileHeader() {
               alt=""
             />
           </div>
-          <div className="absolute right-[5%] h-12 bg-redditBG"></div>
+          <div className="absolute right-[5%] h-10 bg-redditBG flex gap-2 items-center">
+            <img
+              className="h-8 w-8 cursor-pointer"
+              src="https://static.vecteezy.com/ti/gratis-vektor/p3/12867039-beta-tester-icon-stil-kostenlos-vektor.jpg"
+              alt=""
+              title="Beta Tester"
+            />
+            <img
+              className="h-8 w-8 cursor-pointer"
+              src="https://static.vecteezy.com/ti/gratis-vektor/p3/12867039-beta-tester-icon-stil-kostenlos-vektor.jpg"
+              alt=""
+              title="Beta Tester"
+            />
+          </div>
         </div>
       </div>
     </header>
