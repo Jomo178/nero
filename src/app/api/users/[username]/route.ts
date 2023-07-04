@@ -1,5 +1,6 @@
 import { prisma } from "@/db";
-import { avatar, DiscordUser } from "@/utils/types";
+import { getUserData } from "@/utils/functions/getUserData";
+import { DiscordUser } from "@/utils/types";
 import { NextResponse } from "next/server";
 
 export async function POST(
@@ -33,76 +34,14 @@ export async function POST(
       );
     }
 
-    const isTokenExpired =
-      Date.now() > findUser.logged_in.getTime() + findUser.expires_in;
+    // const isTokenExpired =
+    //   Date.now() > findUser.logged_in.getTime() + findUser.expires_in;
 
-    if (isTokenExpired) {
-    }
+    // if (isTokenExpired) {
+    // }
 
-    let userData: DiscordUser | undefined;
-    let botData: DiscordUser | undefined;
+    const { user, bot } = await getUserData(findUser.access_token, ["email"]);
 
-    try {
-      [userData, botData] = await Promise.all([
-        usersDataPromise(findUser.access_token),
-        botsDataPromise(),
-      ]);
-    } catch (error) {
-      userData = undefined;
-      botData = await botsDataPromise();
-    }
-
-    userData = processAvatar(userData);
-    botData = processAvatar(botData);
-
-    return NextResponse.json({ userData, botData });
+    return NextResponse.json({ user, bot });
   }
-}
-
-function usersDataPromise(access_token: string): Promise<DiscordUser> {
-  return new Promise((resolve, reject) => {
-    fetch(`https://discord.com/api/v10/users/@me`, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-      method: "GET",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Bad request: ${response.status}`);
-        }
-        resolve(response.json());
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-}
-
-function botsDataPromise(): Promise<DiscordUser> {
-  return new Promise((resolve, reject) => {
-    fetch(`https://discord.com/api/v10/users/@me`, {
-      headers: {
-        Authorization: `Bot ${process.env.CLIENT_TOKEN}`,
-      },
-      method: "GET",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Bad request: ${response.status}`);
-        }
-        resolve(response.json());
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-}
-
-function processAvatar(data: DiscordUser | undefined) {
-  if (data) {
-    data.avatar = avatar(data.id, data.avatar, data.discriminator);
-    delete data.email;
-  }
-  return data;
 }

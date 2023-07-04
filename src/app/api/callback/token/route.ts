@@ -1,4 +1,6 @@
 import { prisma } from "@/db";
+import { generateRandomString } from "@/utils/functions/functions";
+import { getUserData } from "@/utils/functions/getUserData";
 import { access_token_response } from "@/utils/types";
 import { NextResponse } from "next/server";
 
@@ -31,51 +33,40 @@ export async function POST(request: Request) {
 
   let { access_token, refresh_token } = responseTokenData;
 
-  const randomToken = generateRandomString(59);
+  const token = generateRandomString(59);
 
-  const responseInfo = await fetch(`https://discord.com/api/v10/users/@me`, {
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-    method: "GET",
-  });
+  const { user, bot } = await getUserData(access_token);
 
-  const responseInfoData = await responseInfo.json();
+  if (!user) {
+    return NextResponse.json(
+      { message: "Bad Request", status: 400 },
+      { status: 400 }
+    );
+  }
 
   await prisma.user.upsert({
     where: {
-      authorId: responseInfoData.id,
+      authorId: user.id,
     },
     update: {
-      token: randomToken,
+      token,
       access_token,
       refresh_token,
       logged_in: new Date(),
-      language: responseInfoData.locale,
-      username: responseInfoData.global_name,
+      language: user.locale,
+      username: user.global_name,
     },
     create: {
-      authorId: responseInfoData.id,
-      token: randomToken,
-      email: responseInfoData.email,
-      language: responseInfoData.locale,
-      username: responseInfoData.global_name,
+      authorId: user.id,
+      token,
+      email: user.email,
+      language: user.locale,
+      username: user.global_name,
       access_token,
       refresh_token,
       logged_in: new Date(),
     },
   });
 
-  return NextResponse.json({ token: randomToken, userInfo: responseInfoData });
-}
-
-function generateRandomString(length: number): string {
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "";
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    result += characters.charAt(randomIndex);
-  }
-  return result;
+  return NextResponse.json({ token, user, bot });
 }

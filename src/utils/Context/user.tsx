@@ -1,4 +1,3 @@
-"use client";
 import {
   createContext,
   useContext,
@@ -8,16 +7,19 @@ import {
   ReactNode,
   useEffect,
 } from "react";
-import { avatar, DiscordUser } from "@/utils/types";
+import { DiscordUser } from "@/utils/types";
 import Loading from "../../app/loader";
 
 interface ContextProps {
-  data: DiscordUser | null;
-  setData: Dispatch<SetStateAction<DiscordUser | null>>;
+  data: {
+    user: DiscordUser | undefined;
+    bot: DiscordUser;
+  };
+  setData: Dispatch<SetStateAction<ContextProps["data"]>>;
 }
 
 const GlobalContext = createContext<ContextProps>({
-  data: null,
+  data: { user: undefined, bot: {} as DiscordUser },
   setData: (): void => {},
 });
 
@@ -26,7 +28,10 @@ export const GlobalContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [data, setData] = useState<DiscordUser | null>(null);
+  const [data, setData] = useState<ContextProps["data"]>({
+    user: undefined,
+    bot: {} as DiscordUser,
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -41,13 +46,9 @@ export const GlobalContextProvider = ({
             method: "POST",
           });
           if (response.ok) {
-            const {
-              userData,
-              botData,
-            }: {
-              userData?: DiscordUser;
-              botData: DiscordUser;
-            } = await response.json();
+            const { user, bot } = await response.json();
+
+            setData({ user, bot });
           } else {
             localStorage.removeItem("token");
           }

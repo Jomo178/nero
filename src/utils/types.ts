@@ -2,7 +2,7 @@ export type DiscordUser = {
   id: string;
   username: string;
   avatar: string;
-  email?: string;
+  email: string;
   avatar_decoration: null;
   discriminator: string;
   global_name: string;

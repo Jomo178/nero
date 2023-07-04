@@ -1,7 +1,10 @@
 import { DiscordUser } from "../types";
 import { processAvatar } from "./avatar";
 
-async function getUserData(access_token: string) {
+export async function getUserData(
+  access_token: string,
+  keysToDelete: string[] = []
+) {
   let userData: DiscordUser | undefined;
   let botData: DiscordUser | undefined;
 
@@ -15,8 +18,8 @@ async function getUserData(access_token: string) {
     botData = await botsDataPromise();
   }
 
-  userData = processAvatar(userData);
-  botData = processAvatar(botData);
+  userData = processAvatar(userData, keysToDelete);
+  botData = processAvatar(botData, keysToDelete);
 
   return { user: userData, bot: botData };
 }

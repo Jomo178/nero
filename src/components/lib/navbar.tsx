@@ -6,7 +6,6 @@ import { SlArrowUp } from "react-icons/sl";
 import { CgProfile, CgLogOut } from "react-icons/cg";
 import ImageAvatar, { bot } from "../small/avatar";
 import Link from "next/link";
-import { avatar } from "@/utils/types";
 import { FaDiscord } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/utils/Context/user";
@@ -18,7 +17,7 @@ function Navbar() {
   const { data, setData } = useGlobalContext();
 
   const handleProfile = () => {
-    if (data == null) {
+    if (data?.user == undefined) {
       return (
         <button
           onClick={handleLogin}
@@ -37,8 +36,8 @@ function Navbar() {
         onClick={() => setIsOpen((pv) => !pv)}
         ref={motionDivRef}
       >
-        <h2>{data.username}</h2>
-        <ImageAvatar src={data.avatar}></ImageAvatar>
+        <h2>{data.user.username}</h2>
+        <ImageAvatar src={data.user.avatar}></ImageAvatar>
         <motion.span
           variants={iconVariants}
           transition={{ type: "tween", delay: 0.2 }}
@@ -55,7 +54,7 @@ function Navbar() {
           <ActionList
             icon={CgProfile}
             text="Profile"
-            onClick={() => router.push(`/profile/${data.id}`)}
+            onClick={() => router.push(`/profile/${data.user!.id}`)}
           ></ActionList>
           <ActionList
             icon={CgLogOut}
@@ -96,15 +95,9 @@ function Navbar() {
       if (event.origin !== window.location.origin) return;
 
       if (event.data) {
-        const fetchedData = event.data;
-        localStorage.setItem("token", fetchedData.token);
-        fetchedData.userInfo.avatar = avatar(
-          fetchedData.userInfo.id,
-          fetchedData.userInfo.avatar,
-          fetchedData.userInfo.discriminator
-        );
-        setData(fetchedData.userInfo);
-        router.push(`/profile/${fetchedData.userInfo.id}`);
+        localStorage.setItem("token", event.data.token);
+        setData({ user: event.data.user, bot: event.data.bot });
+        router.push(`/profile/${event.data.user.id}`);
       }
 
       window.removeEventListener("message", receiveMessage);
@@ -115,15 +108,15 @@ function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setData(null);
+    setData((prevState) => ({ ...prevState, user: undefined }));
   };
 
   return (
     <>
       <nav className="flex justify-between p-4 z-10">
         <Link href="/" className="flex justify-between items-center gap-2">
-          <ImageAvatar src={bot.imageUrl}></ImageAvatar>
-          <h2>Nero</h2>
+          <ImageAvatar src={data.bot.avatar}></ImageAvatar>
+          <h2>{data.bot.username}</h2>
         </Link>
         {handleProfile()}
       </nav>
