@@ -1,7 +1,6 @@
 "use client";
 import { bot } from "../small/avatar";
 import { useGlobalContext } from "@/utils/Context/user";
-import { avatar } from "@/utils/types";
 
 function ProfileHeader() {
   const { data, setData } = useGlobalContext();
@@ -9,7 +8,7 @@ function ProfileHeader() {
   return (
     <header className="mt-6">
       <div
-        className="w-full h-[28rem] bg-no-repeat bg-center bg-cover relative rounded-3xl"
+        className="w-full h-[28rem] bg-no-repeat bg-center bg-contain relative rounded-3xl"
         style={{
           backgroundImage: `url(${bot.banner})`,
         }}
@@ -19,7 +18,7 @@ function ProfileHeader() {
           <div className="border-b-black absolute left-[5%] -top-[125%]">
             <img
               className="rounded-full border-4 border-black top-5 w-32 h-32"
-              src={data?.avatar}
+              src={data.user?.avatar}
               alt=""
             />
           </div>
