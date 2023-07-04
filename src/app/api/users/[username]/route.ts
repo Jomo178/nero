@@ -1,5 +1,5 @@
 import { prisma } from "@/db";
-import { avatar, users_discord_info_obj } from "@/utils/types";
+import { avatar, DiscordUser } from "@/utils/types";
 import { NextResponse } from "next/server";
 
 export async function POST(
@@ -39,8 +39,8 @@ export async function POST(
     if (isTokenExpired) {
     }
 
-    let userData: users_discord_info_obj | undefined;
-    let botData: users_discord_info_obj | undefined;
+    let userData: DiscordUser | undefined;
+    let botData: DiscordUser | undefined;
 
     try {
       [userData, botData] = await Promise.all([
@@ -59,9 +59,7 @@ export async function POST(
   }
 }
 
-function usersDataPromise(
-  access_token: string
-): Promise<users_discord_info_obj> {
+function usersDataPromise(access_token: string): Promise<DiscordUser> {
   return new Promise((resolve, reject) => {
     fetch(`https://discord.com/api/v10/users/@me`, {
       headers: {
@@ -81,7 +79,7 @@ function usersDataPromise(
   });
 }
 
-function botsDataPromise(): Promise<users_discord_info_obj> {
+function botsDataPromise(): Promise<DiscordUser> {
   return new Promise((resolve, reject) => {
     fetch(`https://discord.com/api/v10/users/@me`, {
       headers: {
@@ -101,7 +99,7 @@ function botsDataPromise(): Promise<users_discord_info_obj> {
   });
 }
 
-function processAvatar(data: users_discord_info_obj | undefined) {
+function processAvatar(data: DiscordUser | undefined) {
   if (data) {
     data.avatar = avatar(data.id, data.avatar, data.discriminator);
     delete data.email;

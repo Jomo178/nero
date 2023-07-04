@@ -8,12 +8,12 @@ import {
   ReactNode,
   useEffect,
 } from "react";
-import { avatar, users_discord_info_obj } from "@/utils/types";
+import { avatar, DiscordUser } from "@/utils/types";
 import Loading from "../../app/loader";
 
 interface ContextProps {
-  data: users_discord_info_obj | null;
-  setData: Dispatch<SetStateAction<users_discord_info_obj | null>>;
+  data: DiscordUser | null;
+  setData: Dispatch<SetStateAction<DiscordUser | null>>;
 }
 
 const GlobalContext = createContext<ContextProps>({
@@ -26,7 +26,7 @@ export const GlobalContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [data, setData] = useState<users_discord_info_obj | null>(null);
+  const [data, setData] = useState<DiscordUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -45,8 +45,8 @@ export const GlobalContextProvider = ({
               userData,
               botData,
             }: {
-              userData?: users_discord_info_obj;
-              botData: users_discord_info_obj;
+              userData?: DiscordUser;
+              botData: DiscordUser;
             } = await response.json();
           } else {
             localStorage.removeItem("token");

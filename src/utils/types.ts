@@ -1,4 +1,4 @@
-export type users_discord_info_obj = {
+export type DiscordUser = {
   id: string;
   username: string;
   avatar: string;
@@ -22,17 +22,3 @@ export type access_token_response = {
   refresh_token: string;
   scope: string;
 };
-
-export function avatar(
-  id: string,
-  avatar: string,
-  discriminator: string
-): string {
-  if (avatar == null || avatar == undefined) {
-    return `https://cdn.discordapp.com/embed/avatars/${discriminator}.png`;
-  } else {
-    return `https://cdn.discordapp.com/avatars/${id}/${avatar}.${
-      avatar.startsWith("a_") ? "gif" : "png"
-    }`;
-  }
-}
