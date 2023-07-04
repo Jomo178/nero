@@ -1,5 +1,5 @@
 import { prisma } from "@/db";
-import { getUserData } from "@/utils/functions/getUserData";
+import { getUserData } from "@/utils/function/getUserData";
 import { DiscordUser } from "@/utils/types";
 import { NextResponse } from "next/server";
 

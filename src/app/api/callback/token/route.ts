@@ -1,6 +1,6 @@
 import { prisma } from "@/db";
-import { generateRandomString } from "@/utils/functions/functions";
-import { getUserData } from "@/utils/functions/getUserData";
+import { generateRandomString } from "@/utils/function/functions";
+import { getUserData } from "@/utils/function/getUserData";
 import { access_token_response } from "@/utils/types";
 import { NextResponse } from "next/server";
 
