@@ -28,6 +28,7 @@ function Footer() {
 
   return (
     <>
+      <ReactSVG src="/wave/footer.svg"></ReactSVG>
       <footer className="bg-waveColor pt-16 pb-20">
         <div className="flex flex-col md:flex-row gap-14 items-start mx-14 mb-7">
           <div className="flex flex-col gap-8">

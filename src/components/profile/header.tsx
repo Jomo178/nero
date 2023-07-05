@@ -1,20 +1,25 @@
 "use client";
+import { ReactSVG } from "react-svg";
 import { bot } from "../small/avatar";
 import { useGlobalContext } from "@/utils/Context/user";
 
 function ProfileHeader() {
   const { data, setData } = useGlobalContext();
+  const handleSVGInjection = (svg: any) => {
+    svg.setAttribute("height", "40px");
+    // svg.setAttribute("width", "20px");
+  };
 
   return (
     <header className="mt-6">
       <div
-        className="w-full h-[28rem] bg-no-repeat bg-center bg-contain relative rounded-3xl"
+        className="w-full h-[28rem] bg-no-repeat bg-center bg-cover relative rounded-3xl"
         style={{
           backgroundImage: `url(${bot.banner})`,
         }}
       >
         <div className="absolute bottom-0 flex w-full items-end">
-          <div className="w-full h-10 bg-black rounded-lg"></div>
+          <div className="w-full h-10 rounded-lg bg-gradient-to-r from-slate-950 via-gray-900 to-steel-900"></div>
           <div className="border-b-black absolute left-[5%] -top-[125%]">
             <img
               className="rounded-full border-4 border-black top-5 w-32 h-32"

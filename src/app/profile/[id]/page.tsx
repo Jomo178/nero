@@ -16,7 +16,7 @@ const Home = ({ params }: callbackParams) => {
     <>
       <Navbar></Navbar>
       <ProfileHeader></ProfileHeader>
-      {/* <Footer></Footer> */}
+      <Footer></Footer>
     </>
   );
 };
