@@ -16,6 +16,23 @@ function Navbar() {
   const router = useRouter();
   const { data, setData } = useGlobalContext();
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        motionDivRef.current &&
+        !motionDivRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   const handleProfile = () => {
     if (data?.user == undefined) {
       return (
@@ -66,23 +83,6 @@ function Navbar() {
       </motion.div>
     );
   };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        motionDivRef.current &&
-        !motionDivRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
 
   const handleLogin = () => {
     window.open(
