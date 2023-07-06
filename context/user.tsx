@@ -1,15 +1,17 @@
 "use client";
+
 import {
   createContext,
-  useContext,
   Dispatch,
-  SetStateAction,
-  useState,
   ReactNode,
+  SetStateAction,
+  useContext,
   useEffect,
+  useState,
 } from "react";
-import { DiscordUser } from "@/utils/types";
-import Loading from "../../app/loader";
+import { DiscordUser } from "@/types";
+
+import Loading from "../src/app/loader";
 
 interface ContextProps {
   data: {

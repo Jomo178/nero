@@ -1,14 +1,16 @@
 "use client";
-import { motion } from "framer-motion";
+
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
-import { IconType } from "react-icons";
-import { SlArrowUp } from "react-icons/sl";
-import { CgProfile, CgLogOut } from "react-icons/cg";
-import ImageAvatar, { bot } from "../small/avatar";
 import Link from "next/link";
-import { FaDiscord } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import { useGlobalContext } from "@/utils/Context/user";
+import { useGlobalContext } from "@/context/user";
+import { motion } from "framer-motion";
+import { IconType } from "react-icons";
+import { CgLogOut, CgProfile } from "react-icons/cg";
+import { FaDiscord } from "react-icons/fa";
+import { SlArrowUp } from "react-icons/sl";
+
+import ImageAvatar, { bot } from "./avatar";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);

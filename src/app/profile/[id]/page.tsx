@@ -1,6 +1,7 @@
 "use client";
-import Footer from "@/components/lib/footer";
-import Navbar from "@/components/lib/navbar";
+
+import Footer from "@/components/footer";
+import Navbar from "@/components/navbar";
 import ProfileBody from "@/components/profile/body";
 import ProfileHeader from "@/components/profile/header";
 

@@ -1,8 +1,9 @@
 "use client";
+
+import { useGlobalContext } from "@/context/user";
 import { motion } from "framer-motion";
-import { ReactSVG } from "react-svg";
-import { useGlobalContext } from "@/utils/Context/user";
-import { bot } from "../small/avatar";
+
+import { bot } from "../avatar";
 
 function ProfileHeaderSection() {
   const { data, setData } = useGlobalContext();

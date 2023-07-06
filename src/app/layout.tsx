@@ -1,6 +1,9 @@
-import { GlobalContextProvider } from "../utils/Context/user";
+import { GlobalContextProvider } from "../../context/user";
+
 import "./globals.css";
+
 import { Roboto_Mono } from "next/font/google";
+
 const mono = Roboto_Mono({ subsets: ["latin"] });
 
 export const metadata = {

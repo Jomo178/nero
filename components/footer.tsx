@@ -1,15 +1,17 @@
-import ImageAvatar, { bot } from "../small/avatar";
-import { MdEmail } from "react-icons/md";
+import { useState } from "react";
+import Link from "next/link";
+import { AiOutlineUsergroupAdd } from "react-icons/ai";
+import { BsLayoutTextWindow } from "react-icons/bs";
 import { FaDiscord, FaInstagram, FaTwitter } from "react-icons/fa";
 import { HiUserGroup } from "react-icons/hi";
-import { BsLayoutTextWindow } from "react-icons/bs";
-import { AiOutlineUsergroupAdd } from "react-icons/ai";
-import Link from "next/link";
-import Select from "react-tailwindcss-select";
-import { useState } from "react";
-import { languageOptions } from "@/utils/languageOptions";
+import { MdEmail } from "react-icons/md";
 import { ReactSVG } from "react-svg";
+import Select from "react-tailwindcss-select";
 import { SelectValue } from "react-tailwindcss-select/dist/components/type";
+
+import { languageOptions } from "@/lib/languageOptions";
+
+import ImageAvatar, { bot } from "./avatar";
 
 function Footer() {
   const [selectedLanguage, setSelectedLanguage] = useState<any | null>(
