@@ -40,7 +40,7 @@ function ProfileBody() {
     const { left, top, width } = rect;
 
     if (divRef.current) {
-      divRef.current.style.transform = `translateX(-${width}px)`;
+      divRef.current.style.transform = `translateX(${width}px)`;
       divRef.current.style.width = `${width}px`;
     }
 
@@ -57,7 +57,7 @@ function ProfileBody() {
   return (
     <>
       <section className="mt-82">
-        <div className="flex gap-8 pt-8 relative cursor-pointer">
+        <div className="flex gap-8 mx-8 justify-stretch relative cursor-pointer">
           <ProfileTitle
             text="User Info"
             onMouseEnter={handleMouseEnter}
@@ -82,11 +82,12 @@ function ProfileBody() {
             selected={selectedItem}
             ref={firstItemRefs.current[2]}
           ></ProfileTitle>
-          <div
+
+          {/* <div
             ref={divRef}
             style={{ width: "118px", transform: "translateX(0px)" }}
             className="absolute h-1 bottom-0 bg-black transition-all duration-500"
-          ></div>
+          ></div> */}
         </div>
 
         <div className="text-black mt-9">
@@ -115,7 +116,9 @@ const ProfileTitle = forwardRef<
 >(({ text, onMouseEnter, onClick, index, selected }, ref) => {
   return (
     <p
-      className={`p-4 ${selected === index ? "text-red-500" : ""}`}
+      className={`p-4 ${
+        selected === index ? "text-red-500" : ""
+      } after:content-[""] after:border-b-4 after:transition-transform after:scale-x-0 after:ease-in-out hover:after:scale-x-100`}
       onMouseEnter={onMouseEnter}
       onClick={onClick}
       data-index={index}
