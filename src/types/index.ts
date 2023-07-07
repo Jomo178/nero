@@ -22,3 +22,11 @@ export type access_token_response = {
   refresh_token: string;
   scope: string;
 };
+
+export interface PostMetadata {
+  title: string;
+  description: string;
+  image: string;
+  authors: string[];
+  slug: string;
+}

@@ -38,7 +38,6 @@ export const GlobalContextProvider = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log(data);
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -51,8 +50,6 @@ export const GlobalContextProvider = ({
           });
           if (response.ok) {
             const { user, bot } = await response.json();
-
-            console.log("fetch data one");
 
             setData({ user, bot });
           } else {
