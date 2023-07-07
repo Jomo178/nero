@@ -3,7 +3,7 @@
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useGlobalContext } from "@/context/user";
+import { useGlobalContext } from "@/src/context/user";
 import { motion } from "framer-motion";
 import { IconType } from "react-icons";
 import { CgLogOut, CgProfile } from "react-icons/cg";

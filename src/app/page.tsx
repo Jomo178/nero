@@ -1,9 +1,9 @@
 "use client";
 
-import Footer from "@/components/footer";
-import SectionOne from "@/components/home/sectionOne";
-import SectionTwo from "@/components/home/sectionTwo";
-import Navbar from "@/components/navbar";
+import Footer from "@/src/components/footer";
+import SectionOne from "@/src/components/home/sectionOne";
+import SectionTwo from "@/src/components/home/sectionTwo";
+import Navbar from "@/src/components/navbar";
 
 export default function Home() {
   return (

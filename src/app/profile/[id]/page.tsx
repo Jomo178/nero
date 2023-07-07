@@ -1,9 +1,9 @@
 "use client";
 
-import Footer from "@/components/footer";
-import Navbar from "@/components/navbar";
-import ProfileBody from "@/components/profile/body";
-import ProfileHeader from "@/components/profile/header";
+import Footer from "@/src/components/footer";
+import Navbar from "@/src/components/navbar";
+import ProfileBody from "@/src/components/profile/body";
+import ProfileHeader from "@/src/components/profile/header";
 
 interface callbackParams {
   params: {

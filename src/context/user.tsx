@@ -9,9 +9,9 @@ import {
   useEffect,
   useState,
 } from "react";
-import { DiscordUser } from "@/types";
+import { DiscordUser } from "@/src/types";
 
-import Loading from "../src/app/loader";
+import Loading from "../app/loader";
 
 interface ContextProps {
   data: {
@@ -38,10 +38,11 @@ export const GlobalContextProvider = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log(data);
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
-        if (token) {
+        if (token && (!data.user || !data.bot)) {
           const response = await fetch(`/api/users/@me`, {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -50,6 +51,8 @@ export const GlobalContextProvider = ({
           });
           if (response.ok) {
             const { user, bot } = await response.json();
+
+            console.log("fetch data one");
 
             setData({ user, bot });
           } else {
@@ -64,7 +67,7 @@ export const GlobalContextProvider = ({
     };
 
     fetchData();
-  }, []);
+  }, [data.user, data.bot]);
 
   if (loading) {
     return <Loading />;

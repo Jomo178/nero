@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
+import { languageOptions } from "@/src/lib/languageOptions";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { BsLayoutTextWindow } from "react-icons/bs";
 import { FaDiscord, FaInstagram, FaTwitter } from "react-icons/fa";
@@ -8,8 +9,6 @@ import { MdEmail } from "react-icons/md";
 import { ReactSVG } from "react-svg";
 import Select from "react-tailwindcss-select";
 import { SelectValue } from "react-tailwindcss-select/dist/components/type";
-
-import { languageOptions } from "@/lib/languageOptions";
 
 import ImageAvatar, { bot } from "./avatar";
 

@@ -1,4 +1,4 @@
-import { GlobalContextProvider } from "../../context/user";
+import { GlobalContextProvider } from "../context/user";
 
 import "./globals.css";
 

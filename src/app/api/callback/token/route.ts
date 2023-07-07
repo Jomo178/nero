@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
-import { generateRandomString } from "@/function/functions";
-import { getUserData } from "@/function/getUserData";
-import { access_token_response } from "@/types";
-
-import { prisma } from "@/lib/db";
+import { generateRandomString } from "@/src/function/functions";
+import { getUserData } from "@/src/function/getUserData";
+import { prisma } from "@/src/lib/db";
+import { access_token_response } from "@/src/types";
 
 export async function POST(request: Request) {
   const body = await request.text();

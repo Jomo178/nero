@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import { getUserData } from "@/function/getUserData";
-
-import { prisma } from "@/lib/db";
+import { getUserData } from "@/src/function/getUserData";
+import { prisma } from "@/src/lib/db";
 
 export async function POST(
   request: Request,

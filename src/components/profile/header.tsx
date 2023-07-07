@@ -1,6 +1,6 @@
 "use client";
 
-import { useGlobalContext } from "@/context/user";
+import { useGlobalContext } from "@/src/context/user";
 import { motion } from "framer-motion";
 
 import { bot } from "../avatar";
