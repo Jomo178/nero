@@ -8,15 +8,15 @@ export async function POST(
 ) {
   const username = params.username;
 
-  if (username === "@me") {
-    const authorizationHeader = request.headers.get("Authorization");
-    if (!authorizationHeader) {
-      return NextResponse.json(
-        { message: "Unauthorized", status: 401 },
-        { status: 401 }
-      );
-    }
+  const authorizationHeader = request.headers.get("Authorization");
+  if (!authorizationHeader) {
+    return NextResponse.json(
+      { message: "Unauthorized", status: 401 },
+      { status: 401 }
+    );
+  }
 
+  if (username === "@me") {
     const token = authorizationHeader.split("Bearer ")[1];
     if (!token) {
       return NextResponse.json(

@@ -1,3 +1,6 @@
+import { ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
 export function generateRandomString(length: number): string {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -16,4 +19,8 @@ export function formatDate(input: string | number): string {
     day: "numeric",
     year: "numeric",
   });
+}
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
 }

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/src/components/navbar";
-import getPostMetadata from "@/src/function/blog";
+import { getPostMetadata } from "@/src/function/blog";
 import { formatDate } from "@/src/function/functions";
 import { PostMetadata } from "@/src/types";
 import { compareDesc } from "date-fns";
