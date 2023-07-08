@@ -1,11 +1,21 @@
+import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/src/components/navbar";
 import getPostMetadata from "@/src/function/blog";
+import { formatDate } from "@/src/function/functions";
 import { PostMetadata } from "@/src/types";
+import { compareDesc } from "date-fns";
 
 const HomePage = () => {
   const postMetadata = getPostMetadata();
-  const postPreviews = postMetadata.map((post) => (
+
+  const filterPostMetadata = postMetadata
+    .filter((post) => post.published)
+    .sort((a, b) => {
+      return compareDesc(new Date(a.date), new Date(b.date));
+    });
+
+  const postPreviews = filterPostMetadata.map((post) => (
     <PostPreview key={post.slug} {...post} />
   ));
 
@@ -24,27 +34,34 @@ const HomePage = () => {
           </div>
         </div>
         <hr className="my-8" />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {postPreviews}
+        <div className="grid gap-10 sm:grid-cols-2">{postPreviews}</div>
       </div>
     </>
   );
 };
 
-const PostPreview = (props: PostMetadata) => {
+const PostPreview = (post: PostMetadata) => {
   return (
-    <div
-      className="border border-slate-300 p-4 rounded-md shadow-sm
-      bg-white"
-    >
-      <p className="text-sm text-slate-400">{props.title}</p>
+    <>
+      <article className="group relative flex flex-col space-y-2">
+        <Image
+          src={post.image}
+          alt={post.title}
+          width={804}
+          height={452}
+          className="rounded-md border bg-muted transition-colors"
+        />
 
-      <Link href={`/blog/${props.slug}`}>
-        <h2 className=" text-violet-600 hover:underline mb-4">{props.title}</h2>
-      </Link>
-      <p className="text-slate-700">{props.description}</p>
-    </div>
+        <h2 className="text-2xl font-extrabold">{post.title}</h2>
+
+        <p className="text-muted-foreground">{post.description}</p>
+
+        <p className="text-sm">{formatDate(post.date)}</p>
+        <Link href={post.slug} className="absolute inset-0">
+          <span className="sr-only">View Article</span>
+        </Link>
+      </article>
+    </>
   );
 };
 

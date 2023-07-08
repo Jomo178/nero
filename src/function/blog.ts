@@ -10,13 +10,17 @@ const getPostMetadata = (): PostMetadata[] => {
 
   const posts = markdownPosts.map((fileName) => {
     const fileContents = fs.readFileSync(`${folder}/${fileName}`, "utf8");
-    const { title, description, image, authors } = matter(fileContents).data;
+    const { title, description, image, date, authors, published } =
+      matter(fileContents).data;
+
     return {
       title,
       description,
       image,
       authors,
-      slug: fileName.replace(".mdx", ""),
+      published,
+      date,
+      slug: "/blog/" + fileName.replace(".mdx", ""),
     };
   });
 

@@ -28,5 +28,7 @@ export interface PostMetadata {
   description: string;
   image: string;
   authors: string[];
+  date: string;
+  published: boolean;
   slug: string;
 }

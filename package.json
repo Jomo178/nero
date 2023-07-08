@@ -8,8 +8,8 @@
     "turbo": "next dev --turbo",
     "start": "next start",
     "lint": "next lint",
-    "preview": "next build && next start",
-    "postinstall": "prisma generate"
+    "dbpush": "npx prisma db push",
+    "dbclient": "npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^4.15.0",

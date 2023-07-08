@@ -259,6 +259,10 @@ module.exports = {
         discordGreen: "#23a559",
         discordDark: "#1e1f22",
         waveColor: "#0b0f1a",
+        muted: {
+          DEFAULT: "hsl(223 47% 11%)",
+          foreground: "hsl(215.4 16.3% 56.9%)",
+        },
       },
       spacing: {
         7: "1.75rem",
@@ -301,7 +305,10 @@ module.exports = {
       },
       container: {
         center: true,
-        // padding: ".1rem",
+        padding: "2rem",
+        screens: {
+          "2xl": "1400px",
+        },
       },
       // fontFamily: {
       //   header: ["goudy-bookletter-1911", "serif"],
