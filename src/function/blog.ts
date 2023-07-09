@@ -2,6 +2,7 @@ import fs from "fs";
 import * as React from "react";
 import matter from "gray-matter";
 import { compileMDX } from "next-mdx-remote/rsc";
+import { serialize } from "next-mdx-remote/serialize";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
@@ -16,6 +17,7 @@ export function getPostMetadata(): PostMetadata[] {
 
   const posts = markdownPosts.map((fileName) => {
     const fileContents = fs.readFileSync(`${folder}/${fileName}`, "utf8");
+
     const { title, description, image, date, authors, published } =
       matter(fileContents).data;
 
@@ -34,56 +36,53 @@ export function getPostMetadata(): PostMetadata[] {
 }
 
 export async function getPostContent(slug: string) {
-  // const folder = "src/content/blog/";
-  // const file = `${folder}${slug}.mdx`;
-  // const content = fs.readFileSync(file, "utf8");
-
-  // let matterResult = await compileMDX<PostMetadata>({
-  //   source: content,
-  //   options: {
-  //     parseFrontmatter: true,
-  //     mdxOptions: {
-  //       remarkPlugins: [remarkGfm],
-  //       rehypePlugins: [
-  //         rehypeSlug,
-  //         [
-  //           rehypePrettyCode,
-  //           {
-  //             theme: "github-dark",
-  //             onVisitLine(node) {
-  //               // Prevent lines from collapsing in `display: grid` mode, and allow empty
-  //               // lines to be copy/pasted
-  //               if (node.children.length === 0) {
-  //                 node.children = [{ type: "text", value: " " }];
-  //               }
-  //             },
-  //             onVisitHighlightedLine(node) {
-  //               node.properties.className.push("line--highlighted");
-  //             },
-  //             onVisitHighlightedWord(node) {
-  //               node.properties.className = ["word--highlighted"];
-  //             },
-  //           },
-  //         ],
-  //         [
-  //           rehypeAutolinkHeadings,
-  //           {
-  //             properties: {
-  //               className: ["subheading-anchor"],
-  //               ariaLabel: "Link to section",
-  //             },
-  //           },
-  //         ],
-  //       ],
-  //     },
-  //   },
-  // });
-
   const folder = "src/content/blog/";
   const file = `${folder}${slug}.mdx`;
-  const content = fs.readFileSync(file, "utf8");
-  const matterResult = matter(content);
-  const frontmatter = matter(content).data;
+  const fileContent = fs.readFileSync(file, { encoding: "utf8" });
+  const contentResults = matter(fileContent);
 
-  return { frontmatter, content: matterResult };
+  let matterResult = await serialize(contentResults.content, {
+    mdxOptions: {
+      rehypePlugins: [
+        rehypeSlug,
+        [
+          rehypeAutolinkHeadings,
+          {
+            properties: { className: ["anchor"] },
+          },
+          { behaviour: "wrap" },
+        ],
+      ],
+    },
+    // mdxOptions: {
+    //   remarkPlugins: [remarkGfm],
+    //   rehypePlugins: [
+    //     rehypeSlug,
+    //     [
+    //       rehypePrettyCode,
+    //       {
+    //         theme: "github-dark",
+    //         onVisitLine(node) {
+    //           if (node.children.length === 0) {
+    //             node.children = [{ type: "text", value: " " }];
+    //           }
+    //         },
+    //         onVisitHighlightedLine(node) {
+    //           node.properties.className.push("line--highlighted");
+    //         },
+    //         onVisitHighlightedWord(node) {
+    //           node.properties.className = ["word--highlighted"];
+    //         },
+    //       },
+    //     ],
+    //     [rehypeAutolinkHeadings],
+    //   ],
+    // },
+  });
+
+  return {
+    information: contentResults.data,
+    content: contentResults.content,
+    source: matterResult,
+  };
 }

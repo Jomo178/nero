@@ -1,11 +1,12 @@
 import Image from "next/image";
 import { tw } from "@/src/function/functions";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import rehypePrettyCode from "rehype-pretty-code";
 
 import { Callout } from "./callout";
 import { MdxCard } from "./card";
 
-const components = {
+export const components = {
   h1: ({ className, ...props }) => (
     <h1
       className={tw(
@@ -95,7 +96,6 @@ const components = {
     alt,
     ...props
   }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    // eslint-disable-next-line @next/next/no-img-element
     <img className={tw("rounded-md border", className)} alt={alt} {...props} />
   ),
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,

@@ -1,11 +1,12 @@
 import fs from "fs";
 import Image from "next/image";
 import Link from "next/link";
-import { CustomMDX } from "@/src/components/blog/components";
+import { components, CustomMDX } from "@/src/components/blog/components";
 import { getPostContent, getPostMetadata } from "@/src/function/blog";
 import { formatDate } from "@/src/function/functions";
 import { prisma } from "@/src/lib/db";
 import { DiscordUser, PostMetadata } from "@/src/types";
+import { MDXProvider } from "@mdx-js/react";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import { compileMDX, CompileMDXResult, MDXRemote } from "next-mdx-remote/rsc";
 import { serialize } from "next-mdx-remote/serialize";
@@ -20,11 +21,13 @@ export const generateStaticParams = async () => {
 
 const PostPage = async (props: any) => {
   const slug = props.params.slug;
-  const { content, frontmatter } = await getPostContent(slug);
+  const { content, source, information } = await getPostContent(slug);
 
-  const authors = frontmatter.authors.map((author) => ({
+  const authors = information.authors.map((author) => ({
     name: author,
   }));
+
+  console.log(source);
 
   return (
     <article className="container relative max-w-3xl py-6 lg:py-10">
@@ -37,14 +40,14 @@ const PostPage = async (props: any) => {
       </Link>
       <div>
         <time
-          dateTime={frontmatter.date}
+          dateTime={information.date}
           className="block text-sm text-muted-foreground"
         >
-          Published on {formatDate(frontmatter.date)}
+          Published on {formatDate(information.date)}
         </time>
 
         <h1 className="mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl">
-          {frontmatter.title}
+          {information.title}
         </h1>
         {authors?.length ? (
           <div className="mt-4 flex space-x-4">
@@ -75,15 +78,16 @@ const PostPage = async (props: any) => {
         ) : null}
       </div>
       <Image
-        src={frontmatter.image}
-        alt={frontmatter.title}
+        src={information.image}
+        alt={information.title}
         width={720}
         height={405}
         className="my-8 rounded-md border bg-muted transition-colors"
         priority
       />
 
-      <CustomMDX source={content.content} />
+      <MDXRemote {...(source as any)} components={{}} />
+      {/* <CustomMDX source={source.compiledSource} /> */}
 
       {/*
       <Mdx code={post.body.code} />
