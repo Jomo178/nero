@@ -64,5 +64,4 @@ const PostPreview = (post: PostMetadata) => {
     </>
   );
 };
-
 export default HomePage;

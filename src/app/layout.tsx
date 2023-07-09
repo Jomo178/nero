@@ -1,8 +1,8 @@
-import { GlobalContextProvider } from "../context/user";
-
 import "./globals.css";
 
 import { Roboto_Mono } from "next/font/google";
+
+import QueryProvider from "../context/useQuery";
 
 const mono = Roboto_Mono({ subsets: ["latin"] });
 
@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${mono.className} bg-slate-900 text-white container `}>
-        <GlobalContextProvider>{children}</GlobalContextProvider>
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );

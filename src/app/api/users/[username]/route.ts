@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getUserData } from "@/src/function/getUserData";
+import { botsDataPromise, getUserData } from "@/src/function/getUserData";
 import { prisma } from "@/src/lib/db";
 
 export async function POST(
@@ -39,8 +39,8 @@ export async function POST(
     // if (isTokenExpired) {
     // }
 
-    const { user, bot } = await getUserData(findUser.access_token, ["email"]);
+    const user = await getUserData(findUser?.access_token, ["email"]);
 
-    return NextResponse.json({ user, bot });
+    return NextResponse.json(user);
   }
 }

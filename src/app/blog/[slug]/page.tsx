@@ -1,3 +1,4 @@
+import fs from "fs";
 import Image from "next/image";
 import Link from "next/link";
 import { CustomMDX } from "@/src/components/blog/components";
@@ -19,8 +20,7 @@ export const generateStaticParams = async () => {
 
 const PostPage = async (props: any) => {
   const slug = props.params.slug;
-  const { content, frontmatter }: CompileMDXResult<PostMetadata> =
-    await getPostContent(slug);
+  const { content, frontmatter } = await getPostContent(slug);
 
   const authors = frontmatter.authors.map((author) => ({
     name: author,
@@ -83,16 +83,13 @@ const PostPage = async (props: any) => {
         priority
       />
 
-      {/* <CustomMDX
-        // h1 now renders with `large-text` className
-        source={mdxSource}
-      /> */}
+      <CustomMDX source={content.content} />
 
       {/*
       <Mdx code={post.body.code} />
       <hr className="mt-12" />
       <div className="flex justify-center py-6 lg:py-10">
-        <Link href="/blog" className={cn(buttonVariants({ variant: "ghost" }))}>
+        <Link href="/blog" className={tw(buttonVariants({ variant: "ghost" }))}>
           <Icons.chevronLeft className="mr-2 h-4 w-4" />
           See all posts
         </Link>

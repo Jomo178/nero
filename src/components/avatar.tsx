@@ -1,12 +1,19 @@
+import Image from "next/image";
+
 function ImageAvatar({ src }: { src: string }) {
   return (
-    <>
-      <img
-        className="h-7 w-7 rounded-full shadow-outline-normal"
-        src={src}
-        alt="avatar"
-      ></img>
-    </>
+    <Image
+      src={src}
+      alt=""
+      className="h-7 w-7 rounded-full shadow-outline-normal"
+      width={30}
+      height={30}
+    ></Image>
+    // <img
+    //   className="h-7 w-7 rounded-full shadow-outline-normal"
+    //   src={src}
+    //   alt="avatar"
+    // ></img>
   );
 }
 

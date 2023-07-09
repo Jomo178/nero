@@ -3,20 +3,21 @@
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useGlobalContext } from "@/src/context/user";
 import { motion } from "framer-motion";
 import { IconType } from "react-icons";
 import { CgLogOut, CgProfile } from "react-icons/cg";
 import { FaDiscord } from "react-icons/fa";
 import { SlArrowUp } from "react-icons/sl";
 
-import ImageAvatar, { bot } from "./avatar";
+import { useBotData, useUserData } from "../context/userContext";
+import ImageAvatar from "./avatar";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const motionDivRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const { data, setData } = useGlobalContext();
+  const { data, setData } = useUserData();
+  const bot = useBotData().data;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -36,7 +37,7 @@ function Navbar() {
   }, []);
 
   const handleProfile = () => {
-    if (data?.user == undefined) {
+    if (data == undefined) {
       return (
         <button
           onClick={handleLogin}
@@ -55,8 +56,8 @@ function Navbar() {
         onClick={() => setIsOpen((pv) => !pv)}
         ref={motionDivRef}
       >
-        <h2>{data.user.username}</h2>
-        <ImageAvatar src={data.user.avatar}></ImageAvatar>
+        <h2>{data.username}</h2>
+        <ImageAvatar src={data.avatar}></ImageAvatar>
         <motion.span
           variants={iconVariants}
           transition={{ type: "tween", delay: 0.2 }}
@@ -73,7 +74,7 @@ function Navbar() {
           <ActionList
             icon={CgProfile}
             text="Profile"
-            onClick={() => router.push(`/profile/${data.user!.id}`)}
+            onClick={() => router.push(`/profile/${data.id}`)}
           ></ActionList>
           <ActionList
             icon={CgLogOut}
@@ -88,7 +89,7 @@ function Navbar() {
 
   const handleLogin = () => {
     window.open(
-      bot.login,
+      bot.loginLink,
       "_blank",
       `width=500,height=${window.screen.availHeight}`
     );
@@ -98,7 +99,7 @@ function Navbar() {
 
       if (event.data) {
         localStorage.setItem("token", event.data.token);
-        setData({ user: event.data.user, bot: event.data.bot });
+        setData(event.data.user);
         router.push(`/profile/${event.data.user.id}`);
       }
 
@@ -110,19 +111,17 @@ function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setData((prevState) => ({ ...prevState, user: undefined }));
+    setData(undefined);
   };
 
   return (
-    <>
-      <nav className="flex justify-between p-4 z-10">
-        <Link href="/" className="flex justify-between items-center gap-2">
-          <ImageAvatar src={data.bot.avatar}></ImageAvatar>
-          <h2>{data.bot.username}</h2>
-        </Link>
-        {handleProfile()}
-      </nav>
-    </>
+    <nav className="flex justify-between p-4 z-10">
+      <Link href="/" className="flex justify-between items-center gap-2">
+        <ImageAvatar src={bot.avatar}></ImageAvatar>
+        <h2>{bot.username}</h2>
+      </Link>
+      {handleProfile()}
+    </nav>
   );
 }
 
@@ -138,19 +137,17 @@ function ActionList({
   onClick?: MouseEventHandler<HTMLLIElement>;
 }) {
   return (
-    <>
-      <motion.li
-        variants={itemVariants}
-        className="flex gap-2 items-center p-2 rounded my-1 mx-1  hover:bg-discordBG"
-        style={{ color }}
-        onClick={onClick}
-      >
-        <motion.span variants={actionIconVariants}>
-          <Icon size={20}></Icon>
-        </motion.span>
-        <span>{text}</span>
-      </motion.li>
-    </>
+    <motion.li
+      variants={itemVariants}
+      className="flex gap-2 items-center p-2 rounded my-1 mx-1  hover:bg-discordBG"
+      style={{ color }}
+      onClick={onClick}
+    >
+      <motion.span variants={actionIconVariants}>
+        <Icon size={20}></Icon>
+      </motion.span>
+      <span>{text}</span>
+    </motion.li>
   );
 }
 

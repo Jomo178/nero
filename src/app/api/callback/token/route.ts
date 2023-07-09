@@ -35,7 +35,7 @@ export async function POST(request: Request) {
 
   const token = generateRandomString(59);
 
-  const { user, bot } = await getUserData(access_token);
+  const user = await getUserData(access_token);
 
   if (!user) {
     return NextResponse.json(
@@ -68,5 +68,5 @@ export async function POST(request: Request) {
     },
   });
 
-  return NextResponse.json({ token, user, bot });
+  return NextResponse.json({ token, user });
 }

@@ -2,29 +2,32 @@ import { DiscordUser } from "../types";
 import { processAvatar } from "./avatar";
 
 export async function getUserData(
-  access_token: string,
+  access_token: string | undefined,
   keysToDelete: string[] = []
 ) {
-  let userData: DiscordUser | undefined;
-  let botData: DiscordUser | undefined;
+  let userData: DiscordUser | undefined = await usersDataPromise(access_token);
 
-  try {
-    [userData, botData] = await Promise.all([
-      usersDataPromise(access_token),
-      botsDataPromise(),
-    ]);
-  } catch (error) {
-    userData = undefined;
-    botData = await botsDataPromise();
-  }
+  // let botData: DiscordUser | undefined;
+
+  // try {
+  //   [userData, botData] = await Promise.all([
+  //     usersDataPromise(access_token),
+  //     botsDataPromise(),
+  //   ]);
+  // } catch (error) {
+  //   userData = undefined;
+  //   botData = await botsDataPromise();
+  // }
 
   userData = processAvatar(userData, keysToDelete);
-  botData = processAvatar(botData, keysToDelete);
+  // botData = processAvatar(botData, keysToDelete);
 
-  return { user: userData, bot: botData };
+  return userData;
 }
 
-function usersDataPromise(access_token: string): Promise<DiscordUser> {
+function usersDataPromise(
+  access_token: string | undefined
+): Promise<DiscordUser> {
   return new Promise((resolve, reject) => {
     fetch(`https://discord.com/api/v10/users/@me`, {
       headers: {
@@ -44,7 +47,7 @@ function usersDataPromise(access_token: string): Promise<DiscordUser> {
   });
 }
 
-function botsDataPromise(): Promise<DiscordUser> {
+export function botsDataPromise(): Promise<DiscordUser> {
   return new Promise((resolve, reject) => {
     fetch(`https://discord.com/api/v10/users/@me`, {
       headers: {

@@ -21,6 +21,6 @@ export function formatDate(input: string | number): string {
   });
 }
 
-export function cn(...inputs: ClassValue[]) {
+export function tw(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }

@@ -41,20 +41,17 @@ export const GlobalContextProvider = ({
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
-        if (token && (!data.user || !data.bot)) {
-          const response = await fetch(`/api/users/@me`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            method: "POST",
-          });
-          if (response.ok) {
-            const { user, bot } = await response.json();
 
-            setData({ user, bot });
-          } else {
-            localStorage.removeItem("token");
-          }
+        const response = await fetch(`/api/users/@me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          method: "POST",
+        });
+        if (response.ok) {
+          const { user, bot } = await response.json();
+
+          setData({ user, bot });
         }
       } catch (error) {
         localStorage.removeItem("token");
@@ -64,7 +61,7 @@ export const GlobalContextProvider = ({
     };
 
     fetchData();
-  }, [data.user, data.bot]);
+  }, []);
 
   if (loading) {
     return <Loading />;
