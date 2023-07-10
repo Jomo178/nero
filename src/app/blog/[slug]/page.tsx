@@ -1,15 +1,8 @@
-import fs from "fs";
 import Image from "next/image";
 import Link from "next/link";
-import { components, CustomMDX } from "@/src/components/blog/components";
+import { CustomMDX } from "@/src/components/blog/components";
 import { getPostContent, getPostMetadata } from "@/src/function/blog";
 import { formatDate } from "@/src/function/functions";
-import { prisma } from "@/src/lib/db";
-import { DiscordUser, PostMetadata } from "@/src/types";
-import { MDXProvider } from "@mdx-js/react";
-import { useMDXComponent } from "next-contentlayer/hooks";
-import { compileMDX, CompileMDXResult, MDXRemote } from "next-mdx-remote/rsc";
-import { serialize } from "next-mdx-remote/serialize";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 
 export const generateStaticParams = async () => {
@@ -21,13 +14,11 @@ export const generateStaticParams = async () => {
 
 const PostPage = async (props: any) => {
   const slug = props.params.slug;
-  const { content, source, information } = await getPostContent(slug);
+  const { content, information } = await getPostContent(slug);
 
   const authors = information.authors.map((author) => ({
     name: author,
   }));
-
-  console.log(source);
 
   return (
     <article className="container relative max-w-3xl py-6 lg:py-10">
@@ -86,18 +77,7 @@ const PostPage = async (props: any) => {
         priority
       />
 
-      <MDXRemote {...(source as any)} components={{}} />
-      {/* <CustomMDX source={source.compiledSource} /> */}
-
-      {/*
-      <Mdx code={post.body.code} />
-      <hr className="mt-12" />
-      <div className="flex justify-center py-6 lg:py-10">
-        <Link href="/blog" className={tw(buttonVariants({ variant: "ghost" }))}>
-          <Icons.chevronLeft className="mr-2 h-4 w-4" />
-          See all posts
-        </Link>
-      </div> */}
+      <CustomMDX source={content}></CustomMDX>
     </article>
   );
 };

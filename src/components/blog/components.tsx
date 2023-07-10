@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { tw } from "@/src/function/functions";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import rehypePrettyCode from "rehype-pretty-code";
 
 import { Callout } from "./callout";
 import { MdxCard } from "./card";
+import Code from "./code";
 
 export const components = {
   h1: ({ className, ...props }) => (
@@ -140,7 +140,7 @@ export const components = {
   code: ({ className, ...props }) => (
     <code
       className={tw(
-        "relative rounded border px-[0.3rem] py-[0.2rem] font-mono text-sm",
+        "relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm",
         className
       )}
       {...props}
@@ -149,6 +149,7 @@ export const components = {
   Image,
   Callout,
   Card: MdxCard,
+  Code: Code,
 };
 
 export function CustomMDX(props: any) {

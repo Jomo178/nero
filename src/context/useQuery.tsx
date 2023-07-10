@@ -21,20 +21,22 @@ export default function QueryProvider({
       try {
         const token = localStorage.getItem("token");
 
-        if (token && token != "undefined") {
-          const response = await fetch(`/api/users/@me`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            method: "POST",
-          });
-          if (response.ok) {
-            const data = await response.json();
-
-            setData(data);
-          }
-        } else {
+        if (!token) {
           localStorage.removeItem("token");
+          setLoading(false);
+          return;
+        }
+
+        const response = await fetch(`/api/users/@me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          method: "POST",
+        });
+        if (response.ok) {
+          const data = await response.json();
+
+          setData(data);
         }
       } catch (error) {
         localStorage.removeItem("token");
