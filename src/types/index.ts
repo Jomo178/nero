@@ -30,5 +30,6 @@ export interface PostMetadata {
   authors: string[];
   date: string;
   published: boolean;
+  readTime: string;
   slug: string;
 }

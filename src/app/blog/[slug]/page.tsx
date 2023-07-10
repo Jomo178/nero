@@ -1,20 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CustomMDX } from "@/src/components/blog/components";
-import { getPostContent, getPostMetadata } from "@/src/function/blog";
+import { getPostContent } from "@/src/function/blog";
 import { formatDate } from "@/src/function/functions";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 
-export const generateStaticParams = async () => {
-  const posts = getPostMetadata();
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
-};
-
-const PostPage = async (props: any) => {
+const PostPage = (props: any) => {
   const slug = props.params.slug;
-  const { content, information } = await getPostContent(slug);
+  const { content, information } = getPostContent(slug);
 
   const authors = information.authors.map((author) => ({
     name: author,

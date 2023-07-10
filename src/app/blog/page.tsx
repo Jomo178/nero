@@ -56,7 +56,9 @@ const PostPreview = (post: PostMetadata) => {
 
         <p className="text-muted-foreground">{post.description}</p>
 
-        <p className="text-sm">{formatDate(post.date)}</p>
+        <p className="text-xs">
+          {formatDate(post.date)} · {post.readTime} read
+        </p>
         <Link href={post.slug} className="absolute inset-0">
           <span className="sr-only">View Article</span>
         </Link>

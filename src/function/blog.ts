@@ -11,16 +11,16 @@ export function getPostMetadata(): PostMetadata[] {
   const posts = markdownPosts.map((fileName) => {
     const fileContents = fs.readFileSync(`${folder}/${fileName}`, "utf8");
 
-    const { title, description, image, date, authors, published } =
-      matter(fileContents).data;
+    const fileInfo = matter(fileContents).data;
 
     return {
-      title,
-      description,
-      image,
-      authors,
-      published,
-      date,
+      title: fileInfo.title,
+      description: fileInfo.description,
+      image: fileInfo.image,
+      authors: fileInfo.authors,
+      published: fileInfo.published,
+      date: fileInfo.date,
+      readTime: fileInfo.readTime,
       slug: "/blog/" + fileName.replace(".mdx", ""),
     };
   });
@@ -28,7 +28,7 @@ export function getPostMetadata(): PostMetadata[] {
   return posts;
 }
 
-export async function getPostContent(slug: string) {
+export function getPostContent(slug: string) {
   const folder = "src/content/blog/";
   const file = `${folder}${slug}.mdx`;
   const fileContent = fs.readFileSync(file, { encoding: "utf8" });
