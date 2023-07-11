@@ -1,12 +1,19 @@
 import { NextResponse } from "next/server";
 import { botsDataPromise, getUserData } from "@/src/function/getUserData";
 import { prisma } from "@/src/lib/db";
+import { z } from "zod";
+
+const routeContextSchema = z.object({
+  params: z.object({
+    userId: z.string(),
+  }),
+});
 
 export async function POST(
   request: Request,
-  { params }: { params: { username: string } }
+  context: z.infer<typeof routeContextSchema>
 ) {
-  const username = params.username;
+  const username = context.params.userId;
 
   const authorizationHeader = request.headers.get("Authorization");
   if (!authorizationHeader) {
