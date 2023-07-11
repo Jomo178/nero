@@ -1,4 +1,4 @@
-import { tw } from "@/src/function/functions";
+import { cn } from "@/src/function/functions";
 
 interface CalloutProps {
   icon?: string;
@@ -14,7 +14,7 @@ export function Callout({
 }: CalloutProps) {
   return (
     <div
-      className={tw("my-6 flex items-start rounded-md border border-l-4 p-4", {
+      className={cn("my-6 flex items-start rounded-md border border-l-4 p-4", {
         "border-red-900 bg-red-50": type === "danger",
         "border-yellow-900 bg-yellow-50": type === "warning",
       })}

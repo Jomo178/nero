@@ -1,12 +1,11 @@
 ---
-title: Blogs aren't easy
-description: Making blogs is actually rlly hard!
-image: /images/blog/blog-2.png
-date: "2023-07-07"
-published: true
-readTime: "8 min"
+title: Deploying Next.js Apps
+description: How to deploy your Next.js apps on Vercel.
+image: /images/blog/blog-1.png
+date: "2023-01-02"
+readTime: "3 min"
 authors:
-  - 542770757382569994
+  - shadcn
 ---
 
 <Callout>
@@ -28,21 +27,21 @@ The `@tailwindcss/typography` plugin is our attempt to give you what you _actual
 
 It adds a new `prose` class that you can slap on any block of vanilla HTML content and turn it into a beautiful, well-formatted document:
 
-<Code language="html" fileDirectory="index.html">
-  {`<article class="prose">
-    <h1>Garlic bread with cheese: What the science tells us</h1>
-    <p>
-      For years parents have espoused the health benefits of eating garlic bread
-      with cheese to their children, with the food earning such an iconic status
-      in our culture that kids will often dress up as warm, cheesy loaf for
-      Halloween.
-    </p>
-    <p>
-      But a recent study shows that the celebrated appetizer may be linked to a
-      series of rabies cases springing up around the country.
-    </p>
-</article>`}
-</Code>
+```html
+<article class="prose">
+  <h1>Garlic bread with cheese: What the science tells us</h1>
+  <p>
+    For years parents have espoused the health benefits of eating garlic bread
+    with cheese to their children, with the food earning such an iconic status
+    in our culture that kids will often dress up as warm, cheesy loaf for
+    Halloween.
+  </p>
+  <p>
+    But a recent study shows that the celebrated appetizer may be linked to a
+    series of rabies cases springing up around the country.
+  </p>
+</article>
+```
 
 For more information about how to use the plugin and the features it includes, [read the documentation](https://github.com/tailwindcss/typography/blob/master/README.md).
 
@@ -119,16 +118,16 @@ I think most people are going to use [highlight.js](https://highlightjs.org/) or
 
 Here's what a default `tailwind.config.js` file looks like at the time of writing:
 
-<Code language="javascript" fileDirectory="tailwind.config.js">
-  {`module.exports = {
+```js
+module.exports = {
   purge: [],
   theme: {
     extend: {},
   },
   variants: {},
   plugins: [],
-};`}
-</Code>
+};
+```
 
 Hopefully that looks good enough to you.
 
