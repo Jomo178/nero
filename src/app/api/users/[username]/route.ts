@@ -11,9 +11,9 @@ const routeContextSchema = z.object({
 
 export async function POST(
   request: Request,
-  context: z.infer<typeof routeContextSchema>
+  { params }: { params: { username: string } }
 ) {
-  const username = context.params.userId;
+  const username = params.username;
 
   const authorizationHeader = request.headers.get("Authorization");
   if (!authorizationHeader) {

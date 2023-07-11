@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import Link from "next/link";
 import { languageOptions } from "@/src/lib/languageOptions";
@@ -10,12 +12,15 @@ import { ReactSVG } from "react-svg";
 import Select from "react-tailwindcss-select";
 import { SelectValue } from "react-tailwindcss-select/dist/components/type";
 
+import { useBotData } from "../context/userContext";
 import ImageAvatar, { bot } from "./avatar";
 
 function Footer() {
   const [selectedLanguage, setSelectedLanguage] = useState<any | null>(
     languageOptions[0]
   );
+
+  const bot = useBotData().data;
 
   const handleChange = (value: SelectValue) => {
     console.log("value:", value);
@@ -34,27 +39,30 @@ function Footer() {
         <div className="flex flex-col md:flex-row gap-14 items-start mx-14 mb-7">
           <div className="flex flex-col gap-8">
             <Link href="/" className="flex gap-2">
-              <ImageAvatar src={bot.imageUrl}></ImageAvatar>
-              <h6 className="text-2xl font-semibold">{bot.name}</h6>
+              <ImageAvatar src={bot.avatar}></ImageAvatar>
+              <h6 className="text-2xl font-semibold">{bot.username}</h6>
             </Link>
             <p className="max-w-sm text-sm">
-              Introducing {bot.name}, the lightning-fast Discord card bot that
-              brings the excitement of collecting cards to your server! With an
-              extensive collection of user-friendly cards, you'll embark on a
-              thrilling journey of discovery and strategic gameplay. Unleash
-              your inner collector and join the adventure with {bot.name} today!
+              Introducing {bot.username}, the lightning-fast Discord card bot
+              that brings the excitement of collecting cards to your server!
+              With an extensive collection of user-friendly cards, you'll embark
+              on a thrilling journey of discovery and strategic gameplay.
+              Unleash your inner collector and join the adventure with{" "}
+              {bot.username} today!
             </p>
           </div>
           <div className="md:ml-8">
             <h6 className="mb-7 text-xl font-semibold">Contact</h6>
             <ul className="flex flex-col gap-4 cursor-pointer">
+              {" "}
+              x
               <li className="flex gap-2 items-center hover:text-gray-500 transition-all">
                 <MdEmail></MdEmail>
-                <a href={`mailto:${bot.mail}`}>{bot.mail}</a>
+                <a href={`mailto:${bot.supportEMail}`}>{bot.supportEMail}</a>
               </li>
               <li className="flex gap-2 items-center hover:text-gray-500 transition-all">
                 <FaDiscord></FaDiscord>
-                <a href={bot.support}>Support Server</a>
+                <a href={bot.supportServerLink}>Support Server</a>
               </li>
             </ul>
           </div>
@@ -117,7 +125,7 @@ function Footer() {
         </div>
         <div className="ml-14 mt-10">
           <p>
-            Copyright © 2023 {bot.name} |{" "}
+            Copyright © 2023 {bot.username} |{" "}
             <Link
               className="border-b-2 hover:text-gray-500 hover:border-gray-500 transition-all"
               href="/terms"

@@ -14,7 +14,7 @@ export default function QueryProvider({
   children: React.ReactNode;
 }) {
   const { setData } = useUserData();
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +23,7 @@ export default function QueryProvider({
 
         if (!token) {
           localStorage.removeItem("token");
-          // setLoading(false);
+          setLoading(false);
           return;
         }
 
@@ -33,6 +33,7 @@ export default function QueryProvider({
           },
           method: "POST",
         });
+
         if (response.ok) {
           const data = await response.json();
 
@@ -41,16 +42,16 @@ export default function QueryProvider({
       } catch (error) {
         localStorage.removeItem("token");
       } finally {
-        // setLoading(false);
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-  // if (loading) {
-  //   return <Loading />;
-  // }
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>

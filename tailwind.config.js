@@ -1,3 +1,5 @@
+// const defaultTheme = require("tailwindcss/defaultTheme");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -8,7 +10,6 @@ module.exports = {
     "./node_modules/react-tailwindcss-select/dist/index.esm.js",
   ],
   mode: "jit",
-  important: true,
   darkMode: "class",
   theme: {
     extend: {
@@ -310,14 +311,15 @@ module.exports = {
           "2xl": "1400px",
         },
       },
-      // fontFamily: {
-      //   header: ["goudy-bookletter-1911", "serif"],
-      //   heady: ["p22-marcel-script-pro", "sans-serif"],
-      //   poppins: ["poppins", "sans-serif"],
-      //   somaRoman: ["neue-haas-grotesk-text", "sans-serif"],
-      //   somaDisplay: ["neue-haas-grotesk-display", "sans-serif"],
-      //   sans: ["Inter", ...defaultTheme.fontFamily.sans],
-      // },
+      fontFamily: {
+        sans: [
+          "Inter var, sans-serif",
+          {
+            fontFeatureSettings: '"cv11", "ss01"',
+            fontVariationSettings: '"opsz" 32',
+          },
+        ],
+      },
       keyframes: {
         slideIn: {
           "0%": {
@@ -349,8 +351,9 @@ module.exports = {
   plugins: [
     // require("@tailwindcss-line-clamp"),
     require("@tailwindcss/typography"),
-    require("@tailwindcss/forms"),
-    require("@tailwindcss/aspect-ratio"),
-    require("@tailwindcss/container-queries"),
+    // require("tailwindcss-animate"),
+    // require("@tailwindcss/forms"),
+    // require("@tailwindcss/aspect-ratio"),
+    // require("@tailwindcss/container-queries"),
   ],
 };

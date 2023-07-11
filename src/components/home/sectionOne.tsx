@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Balancer from "react-wrap-balancer";
 
 import { bot } from "../avatar";
 
@@ -23,8 +24,10 @@ function SectionOne() {
         >
           <p className="text-4xl">{bot.name}</p>
           <p className="text-sm max-w-xs mb-1">
-            Experience seamless performance and quick response times, ensuring a
-            smooth and enjoyable card collecting experience.
+            <Balancer>
+              Experience seamless performance and quick response times,
+              ensuringa smooth and enjoyable card collecting experience.
+            </Balancer>
           </p>
           <div className="flex gap-6 items-center justify-center">
             <button className="bg-blue-700 p-3 rounded hover:bg-blue-900 transition-all duration-500">

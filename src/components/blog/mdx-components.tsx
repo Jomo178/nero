@@ -1,10 +1,14 @@
 import * as React from "react";
+import { Inter, Source_Code_Pro } from "next/font/google";
 import Image from "next/image";
 import { cn } from "@/src/function/functions";
 import { useMDXComponent } from "next-contentlayer/hooks";
 
 import { Callout } from "./callout";
 import { MdxCard } from "./card";
+
+const dfaultFont = Inter({ subsets: ["greek-ext"], weight: "400" });
+const codeFont = Source_Code_Pro({ subsets: ["vietnamese"], weight: "400" });
 
 const components = {
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -140,7 +144,7 @@ const components = {
   pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
     <pre
       className={cn(
-        "mb-4 mt-6 overflow-x-auto rounded-lg border bg-black py-4",
+        "mb-4 mt-6 overflow-x-auto rounded-lg border !bg-black py-4",
         className
       )}
       {...props}
@@ -168,7 +172,7 @@ export function Mdx({ code }: MdxProps) {
   const Component = useMDXComponent(code);
 
   return (
-    <div className="mdx">
+    <div className={`${dfaultFont.className} mdx`}>
       <Component components={components as any} />
     </div>
   );

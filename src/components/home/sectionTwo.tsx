@@ -1,6 +1,7 @@
 "use client";
-import { motion } from "framer-motion";
+
 import { ReactNode } from "react";
+import { motion } from "framer-motion";
 
 function SectionTwo() {
   const ROWS = 10;
@@ -21,7 +22,7 @@ function SectionTwo() {
               ))}
             </InfiniteLoopSlider>
           </div>
-          <div className="bg-gray-800 absolute p-4 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-82 h-96 rounded-md border-solid border-2 border-rose-300 hover:shadow-inner hover:shadow-rose-400 flex flex-col gap-20 transition-all duration-300">
+          <div className="bg-gray-800 absolute p-4 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-82 h-96 rounded-md border-solid border-2 border-rose-300 hover:shadow-inner hover:shadow-rose-400 flex flex-col gap-20  transition-transform duration-500 hover:scale-105 cursor-pointer">
             <div className="border-b-2">
               <h1 className="text-2xl font-bold text-white">Weekly Card</h1>
             </div>
